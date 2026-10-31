@@ -208,7 +208,11 @@ end
 
 -- A model, scaled so it's `height` studs tall (or as built if nil).
 function ModelFactory.Make(name: string, height: number?): Model
-	local model = AssetService.Model(name)
+	local ok, loaded = pcall(AssetService.Model, name)
+	if not ok then
+		warn("[ModelFactory] Loading " .. name .. " failed, using a stand-in: " .. tostring(loaded))
+	end
+	local model = if ok then loaded else nil
 	if not model then
 		model = standIn(name)
 		model:SetAttribute("StandIn", true)
@@ -270,8 +274,13 @@ function ModelFactory.PublishTemplates()
 		table.insert(names, r.EggModel)
 	end
 	for _, name in names do
-		local model = ModelFactory.Make(name, if name == "ElderDragon" then 30 else 4)
-		model.Parent = folder
+		local ok, err = pcall(function()
+			local model = ModelFactory.Make(name, if name == "ElderDragon" then 30 else 4)
+			model.Parent = folder
+		end)
+		if not ok then
+			warn("[ModelFactory] Couldn't make template " .. name .. ": " .. tostring(err))
+		end
 	end
 	folder.Parent = ReplicatedStorage
 end

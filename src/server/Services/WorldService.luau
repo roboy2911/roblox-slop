@@ -361,12 +361,29 @@ function WorldService.Build()
 				lava.Parent = folder
 			end
 		end
-		buildShelters(i, zone, folder)
-		buildNests(i, zone, folder)
-		buildDecor(i, zone, folder)
-		zoneSign(zone, folder)
+		-- Shelters and nests matter for gameplay; the rest is decoration.
+		local function try(label: string, fn: () -> ())
+			local ok, err = pcall(fn)
+			if not ok then
+				warn(("[WorldService] %s in %s failed: %s"):format(label, zone.Name, tostring(err)))
+			end
+		end
+		try("Shelters", function()
+			buildShelters(i, zone, folder)
+		end)
+		try("Nests", function()
+			buildNests(i, zone, folder)
+		end)
+		try("Decor", function()
+			buildDecor(i, zone, folder)
+		end)
+		try("Sign", function()
+			zoneSign(zone, folder)
+		end)
 		if zone.Rebirths > 0 then
-			rebirthGate(zone, folder)
+			try("Rebirth gate", function()
+				rebirthGate(zone, folder)
+			end)
 		end
 	end
 	buildEdges()
