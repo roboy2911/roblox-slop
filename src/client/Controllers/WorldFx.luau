@@ -224,6 +224,8 @@ end
 
 -- ------------------------------------------------------------ knockback
 
+local knockedUntil = 0
+
 local function onKnockback(velocity: Vector3)
 	local character = player.Character
 	local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
@@ -231,8 +233,11 @@ local function onKnockback(velocity: Vector3)
 	if not root or not humanoid then
 		return
 	end
-	humanoid:ChangeState(Enum.HumanoidStateType.FallingDown)
+	-- Tumble for a moment (PlatformStand), since tripping is turned off (see noTripping).
+	knockedUntil = os.clock() + 0.85
+	humanoid.PlatformStand = true
 	root.AssemblyLinearVelocity = velocity
+	root.AssemblyAngularVelocity = Vector3.new(math.random(-6, 6), 0, math.random(-6, 6))
 	Notifications.Sound("Bonk")
 	-- A quick camera shake.
 	local camera = workspace.CurrentCamera
@@ -248,10 +253,21 @@ local function onKnockback(velocity: Vector3)
 		camera.CFrame *= CFrame.Angles(math.random(-10, 10) / 100 * strength, math.random(-10, 10) / 100 * strength, 0)
 	end)
 	task.delay(0.9, function()
-		if humanoid.Parent and humanoid.Health > 0 then
+		-- Only stand up if no newer bonk happened meanwhile.
+		if os.clock() >= knockedUntil and humanoid.Parent and humanoid.Health > 0 then
+			humanoid.PlatformStand = false
 			humanoid:ChangeState(Enum.HumanoidStateType.GettingUp)
 		end
 	end)
+end
+
+-- Running into things at high speed would trip you over. Turn tripping off.
+local function noTripping(character: Model)
+	local humanoid = character:WaitForChild("Humanoid", 10) :: Humanoid?
+	if humanoid then
+		humanoid:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
+		humanoid:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)
+	end
 end
 
 function WorldFx.Start()
@@ -295,6 +311,10 @@ function WorldFx.Start()
 		hookTools(player.Character)
 	end
 	player.CharacterAdded:Connect(hookTools)
+	if player.Character then
+		task.spawn(noTripping, player.Character)
+	end
+	player.CharacterAdded:Connect(noTripping)
 
 	RunService.RenderStepped:Connect(function()
 		local now = os.clock()
