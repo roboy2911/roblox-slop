@@ -128,6 +128,8 @@ Purchases are recorded in the player's save, so Roblox retries never grant twice
 - Click with the **Bonk Club** to make people drop eggs or stolen dragons.
 - Press **E at the Fusion Altar** to fuse.
 
+**Admin panel:** press **F4** in game (only for user IDs in `src/shared/Config/Admins.luau`). Give gold, spins, dragons and eggs to any player, set rebirths, max upgrades, start fire waves or Star Showers, announce messages, teleport, kick, or wipe a player's data. Works in the live game too.
+
 Studio-only chat commands:
 
 ```

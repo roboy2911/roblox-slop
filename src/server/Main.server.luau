@@ -23,6 +23,7 @@ local ORDER = {
 	"QuestService",
 	"LeaderboardService",
 	"DevCommands",
+	"AdminService",
 }
 
 -- Load them all first so they can find each other through the Registry.

@@ -8,6 +8,7 @@ local ORDER = {
 	"HUD",
 	"Notifications",
 	"Panels",
+	"AdminPanel",
 	"WorldFx",
 	"HazardFx",
 	"Tutorial",

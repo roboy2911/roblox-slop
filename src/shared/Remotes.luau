@@ -25,6 +25,7 @@ local EVENTS = {
 local FUNCTIONS = {
 	"RedeemCode", -- (code) -> (ok, message)
 	"Spin", -- () -> (prize index or nil, message)
+	"Admin", -- (action, args) -> (ok, message)   admins only
 }
 
 local Remotes = {}
