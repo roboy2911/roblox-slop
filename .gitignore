@@ -1,0 +1,7 @@
+blender/out/
+*.rbxl
+*.rbxlx
+*.rbxl.lock
+*.rbxlx.lock
+sourcemap.json
+__pycache__/
