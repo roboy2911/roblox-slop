@@ -8,6 +8,8 @@
 --   /wave               start a fire wave in a few seconds
 --   /star               start a Star Shower (Celestial egg)
 --   /speed 10           set speed level
+--   /spins 5            add wheel spins
+--   /quests             finish all of today's quests
 --   /reset              wipe your data (kicks you; rejoin to start fresh)
 
 local Players = game:GetService("Players")
@@ -65,6 +67,12 @@ local function run(player: Player, message: string)
 	elseif command == "/speed" then
 		data.SpeedLevel = math.clamp(tonumber(args[2]) or 10, 0, Economy.MaxSpeedLevel)
 		Registry.UpgradeService.ApplySpeed(player)
+	elseif command == "/spins" then
+		data.Spins += tonumber(args[2]) or 5
+	elseif command == "/quests" then
+		for _, stat in { "GrabEggs", "GrabRare", "Hatch", "SurviveWaves", "Bonk", "Steal", "Fuse", "Upgrade", "Collect", "Minutes" } do
+			Registry.QuestService.Add(player, stat, 999)
+		end
 	elseif command == "/reset" then
 		Registry.DataService.Reset(player)
 		return

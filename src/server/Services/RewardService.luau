@@ -47,6 +47,10 @@ end
 
 -- Gives a reward. Returns a short description of what was given.
 local function grant(player: Player, reward): string
+	local data = Registry.DataService.Get(player)
+	if not data then
+		return ""
+	end
 	local parts = {}
 	if reward.Gold then
 		local income = Registry.BaseService.IncomePerSecond(player)
@@ -54,8 +58,12 @@ local function grant(player: Player, reward): string
 		Registry.DataService.AddGold(player, amount)
 		table.insert(parts, Format.Gold(amount))
 	end
+	if reward.Spins then
+		data.Spins += reward.Spins
+		Registry.DataService.Changed(player)
+		table.insert(parts, reward.Spins .. (if reward.Spins == 1 then " Spin" else " Spins"))
+	end
 	if reward.LuckyFusion then
-		local data = Registry.DataService.Get(player)
 		data.LuckyFusions += reward.LuckyFusion
 		Registry.DataService.Changed(player)
 		table.insert(parts, reward.LuckyFusion .. " Lucky Fusion")
@@ -113,6 +121,8 @@ local function claimGift(player: Player, index: any)
 	publish(player)
 	Remotes.Notify:FireClient(player, "Gift: " .. got, "Good", "Upgrade")
 end
+
+RewardService.Grant = grant
 
 function RewardService.Start()
 	Remotes.ClaimDaily.OnServerEvent:Connect(claimDaily)

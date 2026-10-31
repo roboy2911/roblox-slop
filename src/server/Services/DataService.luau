@@ -55,7 +55,9 @@ local function defaults()
 		Tutorial = false,
 		LastSeen = 0,
 		Starter = false,
-		Daily = { Last = 0, Streak = 0 }, -- day number (UTC) of the last daily claim
+		Daily = { Last = 0, Streak = 0 },
+		Spins = 1, -- one free spin to start
+		Quests = { Day = 0, List = {}, Progress = {}, Claimed = {} }, -- day number (UTC) of the last daily claim
 	}
 end
 
@@ -256,6 +258,8 @@ local function snapshot(profile: Profile)
 		Slots = data.Slots,
 		Discovered = data.Discovered,
 		LuckyFusions = data.LuckyFusions,
+		Spins = data.Spins,
+		Quests = data.Quests,
 		Tutorial = data.Tutorial,
 		NoSave = profile.NoSave,
 	}

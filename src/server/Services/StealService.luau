@@ -177,6 +177,7 @@ local function complete(thief: Player, theft: Theft)
 	Remotes.Notify:FireClient(thief, ("You stole a %s!"):format(theft.Species), "Good")
 	Remotes.Notify:FireClient(owner, ("%s stole your %s!"):format(thief.DisplayName, theft.Species), "Error")
 	Remotes.NewDragon:FireClient(thief, theft.Species, theft.Mutation, false, "Stolen")
+	Registry.QuestService.Add(thief, "Steal")
 end
 
 local function onPrompt(prompt: ProximityPrompt, player: Player)

@@ -93,6 +93,7 @@ local function swing(player: Player, tool: Tool)
 	Registry.EggService.DropAll(best, "Bonk")
 	Registry.StealService.Fail(best, "Bonk")
 	Remotes.Notify:FireClient(player, "BONK!", "Good", "Bonk")
+	Registry.QuestService.Add(player, "Bonk")
 end
 
 local function give(player: Player)

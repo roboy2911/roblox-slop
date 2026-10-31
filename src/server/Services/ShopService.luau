@@ -63,6 +63,13 @@ local handlers: { [string]: (Player) -> boolean } = {
 		Remotes.Notify:FireClient(player, "Lucky Fusion ready! Your next fusion will be Golden or Shadow.", "Good")
 		return true
 	end,
+	SpinPack = function(player)
+		local data = Registry.DataService.Get(player)
+		data.Spins += 5
+		Registry.DataService.Changed(player)
+		Remotes.Notify:FireClient(player, "+5 Spins! Open the wheel to use them.", "Good")
+		return true
+	end,
 	CalmDragon = function(player)
 		Registry.HazardService.Calm(player)
 		return true

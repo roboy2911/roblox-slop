@@ -69,6 +69,8 @@ local MENU = {
 	{ Name = "Index", Icon = "📖 Index", Color = UI.Colors.Green },
 	{ Name = "Shop", Icon = "🛒 Shop", Color = UI.Colors.Gold },
 	{ Name = "Rewards", Icon = "🎁 Rewards", Color = UI.Colors.Red },
+	{ Name = "Spin", Icon = "🎡 Spin", Color = Color3.fromRGB(240, 110, 180) },
+	{ Name = "Quests", Icon = "📜 Quests", Color = UI.Colors.Orange },
 }
 
 local function buildMenu()

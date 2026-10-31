@@ -14,6 +14,7 @@ return {
 		GoldLarge = { Id = 3724789928, Name = "Gold Hoard", Description = "1 hour of your income (at least 15K).", Icon = "👑" },
 		InstantHatch = { Id = 3724790032, Name = "Instant Hatch", Description = "Hatch every egg on your perches right now.", Icon = "🐣" },
 		LuckyFusion = { Id = 3724790238, Name = "Lucky Fusion", Description = "Your next fusion is guaranteed Golden or Shadow.", Icon = "🍀" },
+		SpinPack = { Id = 0, Name = "5 Spins", Description = "Five spins of the prize wheel.", Icon = "🎡" },
 		CalmDragon = { Id = 3724790441, Name = "Calm the Dragon", Description = "Puts the Elder Dragon to sleep for 90 seconds for the whole server.", Icon = "😴" },
 	},
 	-- How many seconds of income the gold packs give, and their minimums.

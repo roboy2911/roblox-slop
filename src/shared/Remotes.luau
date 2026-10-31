@@ -19,10 +19,12 @@ local EVENTS = {
 	"TutorialDone", -- ()
 	"ClaimDaily", -- ()
 	"ClaimGift", -- (index)
+	"ClaimQuest", -- (quest id)
 }
 
 local FUNCTIONS = {
 	"RedeemCode", -- (code) -> (ok, message)
+	"Spin", -- () -> (prize index or nil, message)
 }
 
 local Remotes = {}

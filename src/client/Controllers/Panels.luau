@@ -4,17 +4,21 @@ local MarketplaceService = game:GetService("MarketplaceService")
 local Players = game:GetService("Players")
 local ProximityPromptService = game:GetService("ProximityPromptService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TweenService = game:GetService("TweenService")
 
 local Dragons = require(ReplicatedStorage.Shared.Config.Dragons)
 local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local Products = require(ReplicatedStorage.Shared.Config.Products)
 local Rewards = require(ReplicatedStorage.Shared.Config.Rewards)
+local Quests = require(ReplicatedStorage.Shared.Config.Quests)
+local Spin = require(ReplicatedStorage.Shared.Config.Spin)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
 local Zones = require(ReplicatedStorage.Shared.Config.Zones)
 local Format = require(ReplicatedStorage.Shared.Format)
 local Income = require(ReplicatedStorage.Shared.Income)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local HUD = require(script.Parent.HUD)
+local Notifications = require(script.Parent.Notifications)
 local Preview = require(script.Parent.Preview)
 local State = require(script.Parent.State)
 local UI = require(script.Parent.UI)
@@ -570,6 +574,186 @@ local function buildRewards()
 	end)
 end
 
+-- ------------------------------------------------------------ spin wheel
+
+local function buildSpin()
+	local panel = UI.Panel("🎡 Prize Wheel", Color3.fromRGB(240, 110, 180), UDim2.fromScale(0.5, 0.78))
+	local body = panel.Body
+	local count = #Spin.Prizes
+	local step = 360 / count
+
+	local holder = UI.Frame(body, UDim2.fromOffset(300, 300), UDim2.new(0.5, -150, 0, 26))
+	holder.BackgroundTransparency = 1
+	local wheel = UI.Frame(holder, UDim2.fromScale(1, 1), nil, UI.Colors.Panel)
+	wheel.AnchorPoint = Vector2.new(0.5, 0.5)
+	wheel.Position = UDim2.fromScale(0.5, 0.5)
+	UI.Corner(wheel, 999)
+	UI.Stroke(wheel, UI.Colors.Gold, 6)
+	UI.Gradient(wheel, UI.Colors.PanelLight, UI.Colors.Panel)
+	for i, prize in Spin.Prizes do
+		local angle = math.rad((i - 1) * step)
+		-- Divider line between slices.
+		local line = UI.Frame(wheel, UDim2.new(0, 3, 0.5, 0), UDim2.fromScale(0.5, 0.5), UI.Colors.Stroke)
+		line.AnchorPoint = Vector2.new(0.5, 1)
+		line.Rotation = (i - 1) * step + step / 2
+		line.ZIndex = 2
+		-- The prize: a colored bubble with its name, pointing out from the middle.
+		local bubble = UI.Frame(wheel, UDim2.fromOffset(84, 46), UDim2.fromScale(0.5 + 0.31 * math.sin(angle), 0.5 - 0.31 * math.cos(angle)), prize.Color)
+		bubble.AnchorPoint = Vector2.new(0.5, 0.5)
+		bubble.Rotation = (i - 1) * step
+		bubble.ZIndex = 3
+		UI.Corner(bubble, 12)
+		UI.Stroke(bubble, UI.Colors.Stroke, 2)
+		local label = UI.Label(bubble, prize.Label, UDim2.new(1, -8, 1, -8), UDim2.fromOffset(4, 4))
+		label.ZIndex = 4
+	end
+	local hub = UI.Frame(wheel, UDim2.fromOffset(46, 46), UDim2.fromScale(0.5, 0.5), UI.Colors.Gold)
+	hub.AnchorPoint = Vector2.new(0.5, 0.5)
+	hub.ZIndex = 5
+	UI.Corner(hub, 999)
+	UI.Stroke(hub, UI.Colors.Stroke, 3)
+	local pointer = UI.Label(holder, "▼", UDim2.fromOffset(50, 50), UDim2.new(0.5, -25, 0, -30), UI.Colors.Red)
+	pointer.ZIndex = 6
+
+	local info = UI.Label(body, "", UDim2.new(1, 0, 0, 26), UDim2.new(0, 0, 0, 336), UI.Colors.Muted)
+	local busy = false
+	local spinButton: TextButton
+	spinButton = UI.Button(body, "SPIN!", Color3.fromRGB(240, 110, 180), UDim2.new(0.44, 0, 0, 56), UDim2.new(0.05, 0, 0, 368), function()
+		if busy then
+			return
+		end
+		busy = true
+		local index, message = Remotes.Spin:InvokeServer()
+		if not index then
+			busy = false
+			Notifications.Toast(message, "Error")
+			return
+		end
+		-- Land slice `index` under the pointer after a few full turns.
+		local current = wheel.Rotation
+		local target = current - (current % 360) + 360 * 5 + (360 - (index - 1) * step) % 360 + math.random(-12, 12) * step / 40
+		local tween = TweenService:Create(wheel, TweenInfo.new(4, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), { Rotation = target })
+		local lastTick = math.floor(current / step)
+		local tickConn = wheel:GetPropertyChangedSignal("Rotation"):Connect(function()
+			local t = math.floor(wheel.Rotation / step)
+			if t ~= lastTick then
+				lastTick = t
+				Notifications.Sound("Click", 0.6, 1.2)
+			end
+		end)
+		tween:Play()
+		tween.Completed:Wait()
+		tickConn:Disconnect()
+		UI.Pop(holder, 1.08)
+		busy = false
+	end)
+	local buy = Products.Products.SpinPack
+	local buyButton = UI.Button(body, "+5 Spins", UI.Colors.Gold, UDim2.new(0.44, 0, 0, 56), UDim2.new(0.51, 0, 0, 368), function()
+		MarketplaceService:PromptProductPurchase(player, buy.Id)
+	end)
+	if buy.Id == 0 then
+		buyButton.Visible = false
+		spinButton.Position = UDim2.new(0.28, 0, 0, 368)
+	else
+		priceText(buy.Id, Enum.InfoType.Product, buyButton)
+	end
+
+	local nextAt = 0
+	State.Watch(function(data)
+		if data.NextSpinIn then
+			nextAt = os.clock() + data.NextSpinIn
+		end
+		spinButton.Text = ("SPIN! (%d)"):format(data.Spins or 0)
+		HUD.SetBadge("Spin", data.Spins or 0)
+	end)
+	task.spawn(function()
+		while true do
+			info.Text = ("Free spin in %s  •  Quests also give spins"):format(Format.Time(nextAt - os.clock()))
+			task.wait(1)
+		end
+	end)
+	HUD.Buttons.Spin.Activated:Connect(panel.Toggle)
+	Panels.Spin = panel
+end
+
+-- ------------------------------------------------------------ quests
+
+local function buildQuests()
+	local panel = UI.Panel("📜 Daily Quests", UI.Colors.Orange, UDim2.fromScale(0.5, 0.6))
+	local scroll = list(panel.Body)
+	local questById = {}
+	for _, q in Quests.List do
+		questById[q.Id] = q
+	end
+	local footer = UI.Label(panel.Body, "New quests every day!", UDim2.new(1, 0, 0, 24), UDim2.new(0, 0, 1, -24), UI.Colors.Muted)
+	footer.ZIndex = 2
+
+	local shownSignature = ""
+	local function refresh(data)
+		local quests = data.Quests
+		if not quests then
+			return
+		end
+		local ready = 0
+		local parts = {}
+		for _, id in quests.List do
+			local q = questById[id]
+			if q then
+				local progress = quests.Progress[id] or 0
+				if progress >= q.Goal and not quests.Claimed[id] then
+					ready += 1
+				end
+				table.insert(parts, id .. progress .. tostring(quests.Claimed[id]))
+			end
+		end
+		HUD.SetBadge("Quests", ready)
+		local signature = table.concat(parts, "|")
+		if signature == shownSignature then
+			return
+		end
+		shownSignature = signature
+		for _, child in scroll:GetChildren() do
+			if child:IsA("Frame") then
+				child:Destroy()
+			end
+		end
+		for order, id in quests.List do
+			local q = questById[id]
+			if not q then
+				continue
+			end
+			local progress = quests.Progress[id] or 0
+			local done = progress >= q.Goal
+			local claimed = quests.Claimed[id] == true
+			local c = card(scroll, 92, order)
+			local t = UI.Label(c, q.Text:format(q.Goal), UDim2.new(0.62, -16, 0, 32), UDim2.fromOffset(14, 8))
+			t.TextXAlignment = Enum.TextXAlignment.Left
+			local bar = UI.Frame(c, UDim2.new(0.62, -16, 0, 22), UDim2.fromOffset(14, 50), UI.Colors.Stroke)
+			UI.Corner(bar, 8)
+			local fill = UI.Frame(bar, UDim2.fromScale(math.clamp(progress / q.Goal, 0, 1), 1), nil, if done then UI.Colors.Green else UI.Colors.Orange)
+			UI.Corner(fill, 8)
+			local barText = UI.Label(bar, ("%d / %d"):format(progress, q.Goal), UDim2.fromScale(1, 1))
+			barText.ZIndex = 2
+			local b = UI.Button(c, "", UI.Colors.Green, UDim2.new(0.34, 0, 0, 58), UDim2.new(0.64, 0, 0, 17), function()
+				Remotes.ClaimQuest:FireServer(id)
+			end)
+			if claimed then
+				b.Text = "Done ✓"
+				UI.SetButtonColor(b, Color3.fromRGB(90, 90, 100))
+			elseif done then
+				b.Text = "Claim!"
+			else
+				local reward = q.Reward
+				b.Text = if reward.Egg then "🥚 " .. reward.Egg.Rarity elseif reward.LuckyFusion then "🍀 Lucky" else "💰 Gold"
+				UI.SetButtonColor(b, Color3.fromRGB(120, 120, 130))
+			end
+		end
+	end
+	State.Watch(refresh)
+	HUD.Buttons.Quests.Activated:Connect(panel.Toggle)
+	Panels.Quests = panel
+end
+
 function Panels.Start()
 	buildUpgrades()
 	buildRebirth()
@@ -577,6 +761,8 @@ function Panels.Start()
 	buildShop()
 	buildFusion()
 	buildRewards()
+	buildSpin()
+	buildQuests()
 end
 
 return Panels

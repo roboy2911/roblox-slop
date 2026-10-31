@@ -76,6 +76,7 @@ local function fuse(player: Player, picked: any)
 	end
 	Registry.BaseService.RefreshLabels(player)
 	Remotes.NewDragon:FireClient(player, species.Name, mutation, isNew, "Fused")
+	Registry.QuestService.Add(player, "Fuse")
 	if nextRarity.Order >= 5 then
 		Remotes.Announce:FireAllClients(("%s fused a %s%s!"):format(player.DisplayName, if mutation then mutation .. " " else "", species.Name), nextRarity.Color)
 	end

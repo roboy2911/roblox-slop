@@ -332,6 +332,7 @@ local function hatch(player: Player, i: number, slot)
 	BaseService.RenderSlot(player, i)
 	refreshIncome(player)
 	Remotes.NewDragon:FireClient(player, slot.Species, slot.Mutation, isNew, "Hatched")
+	Registry.QuestService.Add(player, "Hatch")
 end
 
 function BaseService.HatchAll(player: Player)
@@ -371,6 +372,7 @@ local function collect(player: Player, data)
 	data.Pending -= amount
 	Registry.DataService.AddGold(player, amount)
 	Remotes.Collected:FireClient(player, amount)
+	Registry.QuestService.Add(player, "Collect")
 end
 
 local function tick()

@@ -79,6 +79,7 @@ local function buy(player: Player, kind: any)
 	end
 	Registry.DataService.Changed(player)
 	Remotes.Notify:FireClient(player, "Upgraded!", "Good", "Upgrade")
+	Registry.QuestService.Add(player, "Upgrade")
 end
 
 function UpgradeService.Start()

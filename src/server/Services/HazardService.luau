@@ -44,14 +44,33 @@ local function schedule(at: number)
 	state:SetAttribute("ToZ", END_Z)
 end
 
+local burnedThisWave: { [Player]: boolean } = {}
+
 local function burn(player: Player, humanoid: Humanoid)
+	burnedThisWave[player] = true
 	Registry.EggService.DropAll(player, "Burned")
 	Registry.StealService.Fail(player, "Burned")
 	humanoid.Health = 0
 	Remotes.Notify:FireClient(player, "The Elder Dragon got you! Hide under the rock shelters next time.", "Error", "Burned")
 end
 
+-- Players out in the valley (not home) when a wave starts.
+local function playersInValley(): { Player }
+	local list = {}
+	for _, player in Players:GetPlayers() do
+		local character = player.Character
+		local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
+		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+		if root and humanoid and humanoid.Health > 0 and root.Position.Z > 1 then
+			table.insert(list, player)
+		end
+	end
+	return list
+end
+
 local function runWave(startAt: number, speed: number)
+	burnedThisWave = {}
+	local outside = playersInValley()
 	local duration = (START_Z - END_Z) / speed
 	local half = Hazard.Thickness / 2
 	local prevZ = START_Z
@@ -79,6 +98,7 @@ local function runWave(startAt: number, speed: number)
 		prevZ = z
 		RunService.Heartbeat:Wait()
 	end
+	return outside
 end
 
 -- Pushes the next wave back (the Calm the Dragon purchase).
@@ -110,8 +130,14 @@ function HazardService.Start()
 			local startAt = state:GetAttribute("NextAt") :: number
 			local speed = state:GetAttribute("Speed") :: number
 			state:SetAttribute("Active", true)
-			runWave(startAt, speed)
+			local outside = runWave(startAt, speed)
 			state:SetAttribute("Active", false)
+			-- Everyone who was out in the valley and didn't get burned survived it.
+			for _, player in outside do
+				if player.Parent and not burnedThisWave[player] then
+					Registry.QuestService.Add(player, "SurviveWaves")
+				end
+			end
 			local nextAt = math.max(startAt + Hazard.Interval, workspace:GetServerTimeNow() + 12)
 			-- Someone calmed the dragon during this wave: respect that.
 			local calmedTo = state:GetAttribute("NextAt") :: number

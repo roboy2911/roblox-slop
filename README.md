@@ -133,6 +133,7 @@ Studio-only chat commands:
 ```
 /gold 100000     /rebirth     /give Solaris Golden     /egg Magmaw
 /hatch           /wave        /star                    /speed 10      /reset
+/spins 5         /quests
 ```
 
 To test stealing, use **Test > Clients and Servers** with 2 players.
@@ -150,6 +151,8 @@ All numbers live in `src/shared/Config/`:
 | `Hazard.luau` | wave timing, speeds, shelter size |
 | `Products.luau` | Robux IDs |
 | `Rewards.luau` | daily streak rewards (7 days) and playtime gifts |
+| `Spin.luau` | prize wheel slices and how often free spins come |
+| `Quests.luau` | the daily quest pool and rewards |
 | `Codes.luau` | redeem codes (`DRAGONS`, `HEIST`, `LUCKY`) |
 | `Sounds.luau` | sound volumes, and overrides if you want to swap in your own sounds |
 
@@ -190,4 +193,3 @@ The research says these games launch with several updates ready to go:
 - Thumbnails and icon
 - More zones past the Void Rift, new species, limited-time event eggs
 - Trading between players
-- A spin wheel

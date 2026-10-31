@@ -235,6 +235,10 @@ local function grab(player: Player, egg: Model)
 	end
 	table.insert(list, { Info = info, Model = model })
 	updateCarry(player)
+	Registry.QuestService.Add(player, "GrabEggs")
+	if rarity.Order >= 3 then
+		Registry.QuestService.Add(player, "GrabRare")
+	end
 	if rarity.Order >= 5 then
 		Remotes.Announce:FireAllClients(("%s grabbed a %s%s Egg!"):format(player.DisplayName, if info.Mutation then info.Mutation .. " " else "", rarity.Name), rarity.Color, if rarity.Order >= 7 then "Star" else nil)
 	end
