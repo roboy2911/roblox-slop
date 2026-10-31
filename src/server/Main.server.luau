@@ -56,6 +56,9 @@ local function step(label: string, fn: () -> ())
 end
 
 step("AssetService.Start", Registry.AssetService.Start)
+step("AssetService.Preload", function()
+	Registry.AssetService.Preload(45)
+end)
 step("PublishTemplates", require(Services.ModelFactory).PublishTemplates)
 step("WorldService.Build", Registry.WorldService.Build)
 for _, name in ORDER do

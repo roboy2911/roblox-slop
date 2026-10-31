@@ -20,14 +20,38 @@ local imageCache: { [number]: string | false } = {}
 local modelCache: { [string]: Model | false } = {}
 local loading: { [string]: boolean } = {}
 local warned = false
+local preloaded = false -- after Preload, don't wait on models that are still stuck
+
+local LOAD_TIMEOUT = 20
 
 local function loadAsset(assetId: number): Instance?
 	if assetId == 0 then
 		return nil
 	end
-	local ok, result = pcall(function()
-		return InsertService:LoadAsset(assetId)
+	-- LoadAsset can hang; give up after LOAD_TIMEOUT seconds.
+	local done, ok, result = false, false, nil
+	task.spawn(function()
+		ok, result = pcall(function()
+			return InsertService:LoadAsset(assetId)
+		end)
+		done = true
 	end)
+	local started = os.clock()
+	while not done and os.clock() - started < LOAD_TIMEOUT do
+		task.wait(0.1)
+	end
+	if not done then
+		ok, result = false, "timed out after " .. LOAD_TIMEOUT .. "s"
+		task.spawn(function()
+			-- If it finishes later, throw it away.
+			while not done do
+				task.wait(1)
+			end
+			if typeof(result) == "Instance" then
+				result:Destroy()
+			end
+		end)
+	end
 	if ok then
 		return result
 	end
@@ -106,6 +130,9 @@ end
 -- Its pivot is at the bottom center, so model:PivotTo(groundCFrame) stands it on the ground.
 function AssetService.Model(name: string): Model?
 	while loading[name] do
+		if preloaded then
+			return nil
+		end
 		task.wait()
 	end
 	if modelCache[name] == nil then
@@ -115,6 +142,33 @@ function AssetService.Model(name: string): Model?
 	end
 	local template = modelCache[name]
 	return if template then template:Clone() else nil
+end
+
+-- Loads every model at the same time (instead of one by one when first used).
+-- Waits until all are done or `timeout` seconds pass.
+function AssetService.Preload(timeout: number)
+	local started = os.clock()
+	local pending, loaded, total = 0, 0, 0
+	for name in Assets.Models do
+		total += 1
+		pending += 1
+		task.spawn(function()
+			local ok, model = pcall(AssetService.Model, name)
+			if ok and model then
+				loaded += 1
+				model:Destroy()
+			end
+			pending -= 1
+		end)
+	end
+	while pending > 0 and os.clock() - started < timeout do
+		task.wait(0.1)
+	end
+	preloaded = true
+	print(("[AssetService] Loaded %d/%d models in %.1fs"):format(loaded, total, os.clock() - started))
+	if loaded < total then
+		warn("[AssetService] Some models didn't load; they'll use simple stand-ins.")
+	end
 end
 
 function AssetService.Start()
