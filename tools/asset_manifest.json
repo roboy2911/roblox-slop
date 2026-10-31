@@ -7,6 +7,94 @@
     "id": "125792514134219",
     "sha": "fa4f7511302ed5578185b7ac2a12c7525b060e723942cb247be629a519fa6572"
   },
+  "Boulder.fbx": {
+    "id": "112144497742274",
+    "sha": "1da0a5c6a641aec2700e0aa8d141b443e26b1830295d8de24c09c73ab560d42b"
+  },
+  "Boulder.png": {
+    "id": "89318127358327",
+    "sha": "5f11332637dfa9ea7b75c05d932ad6bf66679fc05a5348cd2d2992b4d57e1935"
+  },
+  "CastleTower.fbx": {
+    "id": "98165009976207",
+    "sha": "97fc9f9a684314cdeb2c081d01b49bea0a8fcbb8141306dcf17645b8a4d4c523"
+  },
+  "CastleTower.png": {
+    "id": "124257283277100",
+    "sha": "903e5f63e78dc13bfb9da57847364d0e1c27181c93d4e2c07a273f24005fdf62"
+  },
+  "CastleWall.fbx": {
+    "id": "96606400991000",
+    "sha": "e44e46388c89d42ea7b7f8472823596bce01f21f96b5eaf309dfb96d2c607a72"
+  },
+  "CastleWall.png": {
+    "id": "136222690996483",
+    "sha": "1d557014f5786ec214363e2782c1143e373000b3caaafa05c5e615cf513b9c0d"
+  },
+  "Club.fbx": {
+    "id": "81108594515224",
+    "sha": "afdb6c5e6da027aa052ed801de2e3e35745d0f27f7a00122643ec317d151c762"
+  },
+  "Club.png": {
+    "id": "83265313920890",
+    "sha": "ee06fa57beb25b4179e1398891012be645b161c6cce6e162d671ebc68479b9b7"
+  },
+  "EggCelestial.fbx": {
+    "id": "134106629625087",
+    "sha": "d24c94706ff757d01edfcdaacb208d100ebb74a95f27faec2cde420615f3ca75"
+  },
+  "EggCelestial.png": {
+    "id": "136752637137273",
+    "sha": "6cad3d5bda50e011b2277c39642c0986da886a3439b68fddf7d29627d9a17d98"
+  },
+  "EggCommon.fbx": {
+    "id": "106168501892070",
+    "sha": "3d271f9699d0158062ee1ffd71961fddff2eeff8aae93459b1401a4fe30efc33"
+  },
+  "EggCommon.png": {
+    "id": "98939824371327",
+    "sha": "6b9c9f3cfa4a2ea833af5c0caa1d594da695d67d41f76d523da929149a95c36b"
+  },
+  "EggEpic.fbx": {
+    "id": "95087847194792",
+    "sha": "1d79b915d11e630276de9622d69a3ceefd22df96bff6599289d0c2c18957099d"
+  },
+  "EggEpic.png": {
+    "id": "86524980482986",
+    "sha": "558ef140675fe0389dfa6c924de82e8dbe6665018acf5bb5e5a2886686b963f8"
+  },
+  "EggLegendary.fbx": {
+    "id": "75542484070522",
+    "sha": "dc8d68fda5fa7b9c0906c825a926dd453d0261c3473cbcdd61b6d3c49bf0b502"
+  },
+  "EggLegendary.png": {
+    "id": "89865064831373",
+    "sha": "0dfcc16bdbd62f688b873f7a953412eeb871559792b31520daf2145abb3259ef"
+  },
+  "EggMythic.fbx": {
+    "id": "131091420295541",
+    "sha": "d999dd031bc5b56a231118881747e3bd60eaeccd2fccf3048e1a5b17a45d912d"
+  },
+  "EggMythic.png": {
+    "id": "80145256173395",
+    "sha": "3cd235e38675186bae4596e374ec894bf433c7245fd65708dd5d0899f3292055"
+  },
+  "EggRare.fbx": {
+    "id": "78837430222924",
+    "sha": "db86c551a0b6a27afe0a0faf9254d3253c97f26b699377c359e5211bd34c5ab9"
+  },
+  "EggRare.png": {
+    "id": "102775924401437",
+    "sha": "2f97b8e14a24ef59d042ba20ee234179a43e7ee856a5fd7e532a23e4ef8baf02"
+  },
+  "EggUncommon.fbx": {
+    "id": "115140895192625",
+    "sha": "8a81335fa325f2cbc86b615286bf96cc1ebf036c2047e1c1029e275b20f367f4"
+  },
+  "EggUncommon.png": {
+    "id": "95386414423737",
+    "sha": "26a7ac15f4bcb51c7bbea387253a9ec50cadb0511b8fda2cfcfe0defac22ae40"
+  },
   "ElderDragon.fbx": {
     "id": "129984910251841",
     "sha": "23566878732569336740f8d82bd66e85c3839956f913f666e8a8563b05f5ae73"
@@ -23,6 +111,14 @@
     "id": "99203555738335",
     "sha": "637526d07f165a0fdb7264ad0ea86744658800f72cff50f23f3777c9debbdae2"
   },
+  "FlowerBush.fbx": {
+    "id": "83654345311907",
+    "sha": "373485433ef2a02e7c6cf9c25f918d888a66b9da72df6be866735f68c85193b0"
+  },
+  "FlowerBush.png": {
+    "id": "101892630679410",
+    "sha": "971794e32fd09762d5adca097155f4921122f5e1d11c958b908055eed13ff002"
+  },
   "Frostfang.fbx": {
     "id": "81865142858379",
     "sha": "bd735f0db3cbe2310f905eae78115b5dcc0b17db05c13410dffc18a5d6033810"
@@ -31,6 +127,46 @@
     "id": "80094333902299",
     "sha": "b676f64e4a560dae0308dd37989cac6218864e7f93fbdd46bbb38da860d66393"
   },
+  "FusionAltar.fbx": {
+    "id": "81463077225480",
+    "sha": "6a8f9962fd3f16b4dd3fc61ff3da7b51dcef9befa7fe2444f6f44d0c36dc56ec"
+  },
+  "FusionAltar.png": {
+    "id": "108668283225708",
+    "sha": "45b9a61d11c42c5e882454ef5ce51d8cda96868403ef330548460c9586b90c00"
+  },
+  "FxCoin.png": {
+    "id": "98387284297594",
+    "sha": "3673c3adb9b2ec1790b469180bceac292c2cd2478d0b68014452ff6e09582a23"
+  },
+  "FxFlame.png": {
+    "id": "97500989947887",
+    "sha": "218acc89bf1b9efd4a0ecf5a06da86f1f04be0869eda827c7e93ee0664a9f3df"
+  },
+  "FxGlow.png": {
+    "id": "83644497506510",
+    "sha": "b0398b4faba56ad120418db490c76d05f0f3db759a4ed9c622b016d26c2452c9"
+  },
+  "FxSmoke.png": {
+    "id": "74868252766133",
+    "sha": "074e3ed4f31e7abfea455a40caeeead4cf2c1b7c5a6bcea23ea17a1ceacb96d5"
+  },
+  "FxSpark.png": {
+    "id": "139394125968633",
+    "sha": "947265f35ae2439c216443c72d7b5c169ff9dde239acca3e76ce87146825dbef"
+  },
+  "FxStar.png": {
+    "id": "81928663653070",
+    "sha": "87376d7f592ff858824f232345b8508fba7f70538963c22444403fd187641ff5"
+  },
+  "Gatehouse.fbx": {
+    "id": "120632786617627",
+    "sha": "4f6e09cc980f9c14f98702e604f27fb08567bf4cbf7ae4b5535262e0e28c93b5"
+  },
+  "Gatehouse.png": {
+    "id": "102456214592520",
+    "sha": "09845a9fea68ebb9749f8f26d51d02f121df96785112d432259c70b67dc679f6"
+  },
   "Glacius.fbx": {
     "id": "119656278154004",
     "sha": "f0266598b49e63560df92e1678c8ed20093deaeb5ecd10d1267f42f0bebdacc7"
@@ -38,6 +174,30 @@
   "Glacius.png": {
     "id": "73500825070168",
     "sha": "3ad239f2f7f43f50aae148353b1297683dfff7edd1f415d67d0398a4b3c1136d"
+  },
+  "IceSpire.fbx": {
+    "id": "135204363387116",
+    "sha": "f97610620f513f8d204edc0f7e03a00163d623f4b810c6c131d040bcc1351598"
+  },
+  "IceSpire.png": {
+    "id": "77286840770058",
+    "sha": "ad5e00b64e9855ae4ae3d79ba2853a5e76eb6c019178106466077bfbf352481e"
+  },
+  "LavaRock.fbx": {
+    "id": "116210606198360",
+    "sha": "4691b073c6b628380431bc521f0bbfd40a9228ed7e61f3269ab02391c0a0a4a8"
+  },
+  "LavaRock.png": {
+    "id": "74404067501746",
+    "sha": "2637b473b9bbb297136c6a9454a2901edcc2bbc6bbd515a6b652992701944130"
+  },
+  "LockPad.fbx": {
+    "id": "109473324611821",
+    "sha": "a41df7f0ede1eed3972b2cf26de336a33e9d89ee9a08bfd179b56a971de160bf"
+  },
+  "LockPad.png": {
+    "id": "134584648703828",
+    "sha": "fcfa72142472269571ec4a6a79506892a79bedffbd429c738fd5bd7d13490f62"
   },
   "Magmaw.fbx": {
     "id": "79676116639288",
@@ -55,6 +215,22 @@
     "id": "104357646158331",
     "sha": "48125fa715f4635b372fa1d0013bb95805b4581bafe512bb1f1412f8d6c96823"
   },
+  "Mushroom.fbx": {
+    "id": "131498619897742",
+    "sha": "4109df692d87208401bb45357491065ae781cd32252db87caf1368e12b9c6fac"
+  },
+  "Mushroom.png": {
+    "id": "131727291300702",
+    "sha": "e70999326e881387c3514a1a7119e13c03a05fbced1017772b3ef0907149ee0c"
+  },
+  "OakTree.fbx": {
+    "id": "78813699459218",
+    "sha": "1fc3b0302cd7c0f5df80231f30c2fe51557fd889b98315662ccba6f4e5487b76"
+  },
+  "OakTree.png": {
+    "id": "134259672452002",
+    "sha": "0f44cba781374b1a83abdf79cae13af56141528f31b49f4d8827752945772953"
+  },
   "Pebblewing.fbx": {
     "id": "137208589277139",
     "sha": "b34e890739d1b62cdd2822a32b7152bd08e3b60e0fcc2f77428684faad92eaf8"
@@ -63,6 +239,22 @@
     "id": "133867599537676",
     "sha": "173acccf114db64df853f81f7114822ed32dcb7efd172caa546dc1b7ad3d9f8d"
   },
+  "Perch.fbx": {
+    "id": "107606668091649",
+    "sha": "66e3f84137c98516421fba223424c2de7ba7d00ffb0d7eacf8c75d03f37f33a5"
+  },
+  "Perch.png": {
+    "id": "128155230263950",
+    "sha": "8ffe02e613685f97abc346baa575306c34b5fa0cabe5a32dde77b111a407e5ad"
+  },
+  "PineTree.fbx": {
+    "id": "131156090131332",
+    "sha": "a04ad8d804aa3de7f861710a984f8054a75f544dd59c217f509d164366a8e361"
+  },
+  "PineTree.png": {
+    "id": "115442153107807",
+    "sha": "33e0ae639a75f30214279996f8f5bf19436d5c014ab9d2e832c94ef4acb6f96c"
+  },
   "Reedscale.fbx": {
     "id": "115851157730007",
     "sha": "086005d305a2f868c66926783073d5596e9092419698c6428f51c37fd0e41d7f"
@@ -70,6 +262,14 @@
   "Reedscale.png": {
     "id": "135277966081219",
     "sha": "46f81e05895832ed013842995c202c0bf26d1c43642a9ab65bfc42fa6b92e311"
+  },
+  "Shelter.fbx": {
+    "id": "139078752187760",
+    "sha": "10f5d9f7e864d3807b5e83be28d46cf73ebe26441131dd2534d81948a6b83bdc"
+  },
+  "Shelter.png": {
+    "id": "72410747375943",
+    "sha": "5c50f996c4ac6b20e9713c0494e5ae6d2170d0d9a96052e834e3976dfe8a2525"
   },
   "Solaris.fbx": {
     "id": "114905695183320",
@@ -95,6 +295,14 @@
     "id": "85246421837656",
     "sha": "8e991094be7bac8350e3a772c1de93689408e773f261cb55f3ebf5927a866757"
   },
+  "Tablet.fbx": {
+    "id": "103926455383689",
+    "sha": "354614e62fef374301504b52f79a699f18e3e42a2b5b29cf2d56e7ab30b311e3"
+  },
+  "Tablet.png": {
+    "id": "108126564545638",
+    "sha": "72abd401627c8d0feb9c9970f550092c384883e0271c798d2e22d7622b850fb9"
+  },
   "Thornback.fbx": {
     "id": "104688927409695",
     "sha": "d511beae6f76466b5a9bf023a85f0f6f92a7027e3025ba1c028f140db1828a01"
@@ -103,6 +311,22 @@
     "id": "90858070187939",
     "sha": "d0ff4e71dc19d2c57b4f4da67c61dfccdec6b009bcf5595934a0b6c17d81daba"
   },
+  "TreasureChest.fbx": {
+    "id": "89452591528985",
+    "sha": "d923939a799cee5341760709ad37d955ea74f59cca309862ea10c40b22f538e3"
+  },
+  "TreasureChest.png": {
+    "id": "127052770493073",
+    "sha": "4216bc29ee1c45ca4381a93f70bac1e12852310a72db13afc29cf4fcccf4d2ec"
+  },
+  "VoidCrystal.fbx": {
+    "id": "128501818699958",
+    "sha": "94f263438523165fe620677d89ac1559b6e76dbfe37eb99af1138100e4bd18d7"
+  },
+  "VoidCrystal.png": {
+    "id": "98220752792553",
+    "sha": "95097c6b181de96ae9b7e282ab8997c30cb2e0a1b93bb285ed8d2a6737d5b0ed"
+  },
   "Voidwyrm.fbx": {
     "id": "81399061172975",
     "sha": "6ca14782465c9ac5ef8772dce3630fdc95346a0f9abba69895f4cc9c170122bf"
@@ -110,5 +334,21 @@
   "Voidwyrm.png": {
     "id": "109975502498397",
     "sha": "ef2e3ae417c4c779df75972f681202802652d71216c6e311f4501374c53e8e61"
+  },
+  "WildNest.fbx": {
+    "id": "140224876534220",
+    "sha": "36a325464e00791b422837aae247f641f73c8adbe80c9800bc832b4e11926e7d"
+  },
+  "WildNest.png": {
+    "id": "102147923717143",
+    "sha": "d2827001c674e3620696f6d822d6435a78355a92828f217983f1fbcf9e9346ca"
+  },
+  "ZoneSign.fbx": {
+    "id": "129041045744113",
+    "sha": "a1cb048cbbc3c094e74bd3302186b34f899c4450abbfc2bb6f6d03b233d204ac"
+  },
+  "ZoneSign.png": {
+    "id": "70520562363779",
+    "sha": "4a8f57a3ba7b4fc9434d434c28aee8d4332537a13221ed2968dd033f7167e2ac"
   }
 }
