@@ -1,4 +1,36 @@
 {
+  "Emberkit.fbx": {
+    "id": "99405635754474",
+    "sha": "04d7c74a4ef1b533cd2872a94f93dd05c998287aaad478a115ea9f8de6611437"
+  },
+  "Emberkit.png": {
+    "id": "99203555738335",
+    "sha": "637526d07f165a0fdb7264ad0ea86744658800f72cff50f23f3777c9debbdae2"
+  },
+  "Frostfang.fbx": {
+    "id": "81865142858379",
+    "sha": "bd735f0db3cbe2310f905eae78115b5dcc0b17db05c13410dffc18a5d6033810"
+  },
+  "Frostfang.png": {
+    "id": "80094333902299",
+    "sha": "b676f64e4a560dae0308dd37989cac6218864e7f93fbdd46bbb38da860d66393"
+  },
+  "Glacius.fbx": {
+    "id": "119656278154004",
+    "sha": "f0266598b49e63560df92e1678c8ed20093deaeb5ecd10d1267f42f0bebdacc7"
+  },
+  "Glacius.png": {
+    "id": "73500825070168",
+    "sha": "3ad239f2f7f43f50aae148353b1297683dfff7edd1f415d67d0398a4b3c1136d"
+  },
+  "Magmaw.fbx": {
+    "id": "79676116639288",
+    "sha": "77846f726233728f4ac9f58b11c7f72a84195bb88ae5edf2f43722c34cf1c019"
+  },
+  "Magmaw.png": {
+    "id": "87132157227353",
+    "sha": "1b7fc1e6e59e65ea2f9c4f17a9ce52e3661265a731056f6a6fff7909f65c005e"
+  },
   "Mossling.fbx": {
     "id": "124592801415109",
     "sha": "9e0f71c370589f424fa1543f7ca91207e20ce4e0da573462ec05399e36c53f6c"
@@ -14,5 +46,41 @@
   "Pebblewing.png": {
     "id": "133867599537676",
     "sha": "173acccf114db64df853f81f7114822ed32dcb7efd172caa546dc1b7ad3d9f8d"
+  },
+  "Reedscale.fbx": {
+    "id": "115851157730007",
+    "sha": "086005d305a2f868c66926783073d5596e9092419698c6428f51c37fd0e41d7f"
+  },
+  "Reedscale.png": {
+    "id": "135277966081219",
+    "sha": "46f81e05895832ed013842995c202c0bf26d1c43642a9ab65bfc42fa6b92e311"
+  },
+  "Solaris.fbx": {
+    "id": "114905695183320",
+    "sha": "6016aefc85c17821ceabd0044d16d31da87b5ba2b2b50d6bdf843118e2ef8f0c"
+  },
+  "Solaris.png": {
+    "id": "134466627787478",
+    "sha": "7fa3592408bc5f3842b52ffa1f28f65ce43794fee0bc0f6bd27c98dddf96ffc0"
+  },
+  "Stormtail.fbx": {
+    "id": "123922122384074",
+    "sha": "2b827fa1729cdd9bd5d79b9c1a7b0df54335c07ff8ac730ae7ab07b0b1e34438"
+  },
+  "Stormtail.png": {
+    "id": "85246421837656",
+    "sha": "8e991094be7bac8350e3a772c1de93689408e773f261cb55f3ebf5927a866757"
+  },
+  "Thornback.fbx": {
+    "id": "104688927409695",
+    "sha": "d511beae6f76466b5a9bf023a85f0f6f92a7027e3025ba1c028f140db1828a01"
+  },
+  "Thornback.png": {
+    "id": "90858070187939",
+    "sha": "d0ff4e71dc19d2c57b4f4da67c61dfccdec6b009bcf5595934a0b6c17d81daba"
+  },
+  "Voidwyrm.fbx": {
+    "id": "81399061172975",
+    "sha": "6ca14782465c9ac5ef8772dce3630fdc95346a0f9abba69895f4cc9c170122bf"
   }
 }
