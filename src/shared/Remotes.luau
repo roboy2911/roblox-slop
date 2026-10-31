@@ -17,6 +17,8 @@ local EVENTS = {
 	"Rebirth", -- ()
 	"Fuse", -- ({slot, slot, slot})
 	"TutorialDone", -- ()
+	"ClaimDaily", -- ()
+	"ClaimGift", -- (index)
 }
 
 local FUNCTIONS = {

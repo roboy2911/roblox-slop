@@ -45,7 +45,8 @@ local function buildGold()
 end
 
 local function buildStats()
-	local box = pill(gui, UDim2.fromOffset(170, 112), UDim2.new(1, -184, 1, -126), UI.Colors.Panel)
+	-- Top-left (the bottom-right corner is under the jump button on phones).
+	local box = pill(gui, UDim2.fromOffset(170, 112), UDim2.fromOffset(12, 8), UI.Colors.Panel)
 	carryLabel = UI.Label(box, "🥚 0/1", UDim2.new(1, -20, 0, 30), UDim2.fromOffset(10, 8))
 	carryLabel.TextXAlignment = Enum.TextXAlignment.Left
 	speedLabel = UI.Label(box, "👟 22", UDim2.new(1, -20, 0, 30), UDim2.fromOffset(10, 42))
@@ -67,10 +68,11 @@ local MENU = {
 	{ Name = "Rebirth", Icon = "♻️ Rebirth", Color = UI.Colors.Purple },
 	{ Name = "Index", Icon = "📖 Index", Color = UI.Colors.Green },
 	{ Name = "Shop", Icon = "🛒 Shop", Color = UI.Colors.Gold },
+	{ Name = "Rewards", Icon = "🎁 Rewards", Color = UI.Colors.Red },
 }
 
 local function buildMenu()
-	local holder = UI.Frame(gui, UDim2.fromOffset(150, 4 * 62), UDim2.new(0, 12, 0.5, -124))
+	local holder = UI.Frame(gui, UDim2.fromOffset(150, #MENU * 62), UDim2.new(0, 12, 0.5, -#MENU * 31))
 	holder.BackgroundTransparency = 1
 	local list = Instance.new("UIListLayout")
 	list.Padding = UDim.new(0, 10)
@@ -81,6 +83,31 @@ local function buildMenu()
 		b.LayoutOrder = i
 		HUD.Buttons[item.Name] = b
 	end
+end
+
+-- A red bubble with a number on a menu button ("2 rewards ready").
+function HUD.SetBadge(name: string, count: number)
+	local button = HUD.Buttons[name]
+	if not button then
+		return
+	end
+	local badge = button:FindFirstChild("Badge") :: TextLabel?
+	if not badge then
+		local b = UI.Label(button, "", UDim2.fromOffset(28, 28), UDim2.fromScale(1, 0), UI.Colors.Text)
+		b.Name = "Badge"
+		b.AnchorPoint = Vector2.new(0.5, 0.5)
+		b.BackgroundTransparency = 0
+		b.BackgroundColor3 = UI.Colors.Red
+		b.ZIndex = 5
+		UI.Corner(b, 14)
+		badge = b
+	end
+	local b = badge :: TextLabel
+	if count > 0 and not b.Visible then
+		UI.Pop(b, 1.6)
+	end
+	b.Visible = count > 0
+	b.Text = tostring(count)
 end
 
 local function updateWave()

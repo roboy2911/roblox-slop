@@ -149,6 +149,7 @@ All numbers live in `src/shared/Config/`:
 | `Economy.luau` | upgrade/rebirth prices, speeds, stealing, lock time, offline earnings |
 | `Hazard.luau` | wave timing, speeds, shelter size |
 | `Products.luau` | Robux IDs |
+| `Rewards.luau` | daily streak rewards (7 days) and playtime gifts |
 | `Codes.luau` | redeem codes (`DRAGONS`, `HEIST`, `LUCKY`) |
 | `Sounds.luau` | sound volumes, and overrides if you want to swap in your own sounds |
 
@@ -189,4 +190,4 @@ The research says these games launch with several updates ready to go:
 - Thumbnails and icon
 - More zones past the Void Rift, new species, limited-time event eggs
 - Trading between players
-- Daily login rewards and a spin wheel
+- A spin wheel

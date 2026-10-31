@@ -31,7 +31,28 @@ function UI.Screen(name: string, order: number?): ScreenGui
 	gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 	gui.DisplayOrder = order or 0
 	gui.Parent = player:WaitForChild("PlayerGui")
+	UI.AutoScale(gui)
 	return gui
+end
+
+-- Shrinks a whole screen on small (phone) screens so nothing overlaps.
+-- Designed for a 1100 x 700 window; never grows past normal size.
+function UI.AutoScale(gui: ScreenGui)
+	local scale = Instance.new("UIScale")
+	scale.Parent = gui
+	local function update()
+		local camera = workspace.CurrentCamera
+		if not camera then
+			return
+		end
+		local size = camera.ViewportSize
+		scale.Scale = math.clamp(math.min(size.X / 1100, size.Y / 700), 0.5, 1)
+	end
+	update()
+	workspace:GetPropertyChangedSignal("CurrentCamera"):Connect(update)
+	if workspace.CurrentCamera then
+		workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(update)
+	end
 end
 
 function UI.Corner(parent: Instance, radius: number?): UICorner

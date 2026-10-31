@@ -55,6 +55,7 @@ local function defaults()
 		Tutorial = false,
 		LastSeen = 0,
 		Starter = false,
+		Daily = { Last = 0, Streak = 0 }, -- day number (UTC) of the last daily claim
 	}
 end
 

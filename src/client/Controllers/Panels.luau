@@ -8,6 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Dragons = require(ReplicatedStorage.Shared.Config.Dragons)
 local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local Products = require(ReplicatedStorage.Shared.Config.Products)
+local Rewards = require(ReplicatedStorage.Shared.Config.Rewards)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
 local Zones = require(ReplicatedStorage.Shared.Config.Zones)
 local Format = require(ReplicatedStorage.Shared.Format)
@@ -434,12 +435,148 @@ local function buildFusion()
 	Panels.Fusion = panel
 end
 
+-- ------------------------------------------------------------ rewards
+
+local function describe(reward): string
+	if reward.Gold then
+		return "💰 " .. (if reward.Gold.Seconds >= 60 then math.floor(reward.Gold.Seconds / 60) .. " min of gold" else "Gold")
+	elseif reward.LuckyFusion then
+		return "🍀 Lucky Fusion"
+	elseif reward.Egg then
+		return "🥚 " .. (if reward.Egg.Mutation then reward.Egg.Mutation .. " " else "") .. reward.Egg.Rarity .. " Egg"
+	end
+	return "?"
+end
+
+local function rewardColor(reward): Color3
+	if reward.Egg then
+		return Rarities.ByName[reward.Egg.Rarity].Color
+	elseif reward.LuckyFusion then
+		return UI.Colors.Green
+	end
+	return UI.Colors.Gold
+end
+
+local function buildRewards()
+	local panel = UI.Panel("🎁 Rewards", UI.Colors.Red, UDim2.fromScale(0.62, 0.74))
+	local body = panel.Body
+
+	-- Daily streak: 7 tiles.
+	local dailyTitle = UI.Label(body, "Daily Rewards", UDim2.new(1, 0, 0, 28), UDim2.new(), UI.Colors.Gold)
+	dailyTitle.TextXAlignment = Enum.TextXAlignment.Left
+	local row = UI.Frame(body, UDim2.new(1, 0, 0, 96), UDim2.fromOffset(0, 32))
+	row.BackgroundTransparency = 1
+	local layout = Instance.new("UIListLayout")
+	layout.FillDirection = Enum.FillDirection.Horizontal
+	layout.Padding = UDim.new(0, 6)
+	layout.Parent = row
+	local tiles = {}
+	for day, reward in Rewards.Daily do
+		local tile = UI.Frame(row, UDim2.new(1 / 7, -6, 1, 0), nil, UI.Colors.PanelLight)
+		tile.LayoutOrder = day
+		UI.Corner(tile, 10)
+		local stroke = UI.Stroke(tile, rewardColor(reward), 2)
+		UI.Label(tile, "Day " .. day, UDim2.new(1, -6, 0, 20), UDim2.fromOffset(3, 4))
+		local text = UI.Label(tile, describe(reward), UDim2.new(1, -6, 0, 60), UDim2.fromOffset(3, 28), rewardColor(reward))
+		text.TextWrapped = true
+		tiles[day] = { Frame = tile, Stroke = stroke }
+	end
+	local dailyButton = UI.Button(body, "Claim!", UI.Colors.Green, UDim2.new(0.4, 0, 0, 46), UDim2.new(0.3, 0, 0, 134), function()
+		Remotes.ClaimDaily:FireServer()
+	end)
+
+	-- Playtime gifts.
+	local giftTitle = UI.Label(body, "Playtime Gifts (stay and play to unlock)", UDim2.new(1, 0, 0, 28), UDim2.fromOffset(0, 192), UI.Colors.Gold)
+	giftTitle.TextXAlignment = Enum.TextXAlignment.Left
+	local grid = UI.Grid(body, UDim2.new(1 / 3, -10, 0, 96), UDim2.fromOffset(0, 222), UDim2.new(1, 0, 1, -222))
+	local gifts = {}
+	for i, gift in Rewards.Gifts do
+		local cell = UI.Frame(grid, UDim2.new(), nil, UI.Colors.PanelLight)
+		cell.LayoutOrder = i
+		UI.Corner(cell, 12)
+		UI.Stroke(cell, rewardColor(gift), 2)
+		UI.Label(cell, describe(gift), UDim2.new(1, -10, 0, 30), UDim2.fromOffset(5, 6), rewardColor(gift))
+		local b = UI.Button(cell, "", UI.Colors.Green, UDim2.new(1, -16, 0, 44), UDim2.fromOffset(8, 44), function()
+			Remotes.ClaimGift:FireServer(i)
+		end)
+		gifts[i] = b
+	end
+
+	-- Refresh timers, buttons and the menu badge every half second.
+	task.spawn(function()
+		while true do
+			local data = State.Data
+			if data and data.SessionStart then
+				local ready = 0
+				local day = data.DailyDay
+				if day then
+					ready += 1
+				end
+				for d, t in tiles do
+					local claimedToday = day == nil and d == math.min(data.DailyStreak or 0, #Rewards.Daily)
+					local isToday = d == day or claimedToday
+					t.Frame.BackgroundColor3 = if isToday then Color3.fromRGB(70, 110, 80) else UI.Colors.PanelLight
+					t.Stroke.Thickness = if isToday then 4 else 2
+				end
+				if day then
+					dailyButton.Text = "Claim Day " .. day .. "!"
+					UI.SetButtonColor(dailyButton, UI.Colors.Green)
+				else
+					local nextDay = ((data.DailyLast or 0) + 1) * 86400
+					dailyButton.Text = "Next in " .. Format.Time(nextDay - os.time())
+					UI.SetButtonColor(dailyButton, Color3.fromRGB(120, 120, 130))
+				end
+
+				local claimed = {}
+				for _, i in data.GiftsClaimed or {} do
+					claimed[i] = true
+				end
+				local played = workspace:GetServerTimeNow() - data.SessionStart
+				for i, gift in Rewards.Gifts do
+					local b = gifts[i]
+					local left = gift.Minutes * 60 - played
+					if claimed[i] then
+						b.Text = "Claimed ✓"
+						UI.SetButtonColor(b, Color3.fromRGB(90, 90, 100))
+					elseif left <= 0 then
+						b.Text = "Claim!"
+						UI.SetButtonColor(b, UI.Colors.Green)
+						ready += 1
+					else
+						b.Text = Format.Time(left)
+						UI.SetButtonColor(b, Color3.fromRGB(120, 120, 130))
+					end
+				end
+				HUD.SetBadge("Rewards", ready)
+			end
+			task.wait(0.5)
+		end
+	end)
+
+	HUD.Buttons.Rewards.Activated:Connect(panel.Toggle)
+	Panels.Rewards = panel
+
+	-- Show the daily reward when you join (after the first-time guide).
+	task.spawn(function()
+		local data = State.Data
+		while not data or data.SessionStart == nil do
+			State.Changed:Wait()
+			data = State.Data
+		end
+		task.wait(3)
+		if data.DailyDay and data.Tutorial and not panel.IsOpen() then
+			panel.Open()
+		end
+	end)
+end
+
 function Panels.Start()
 	buildUpgrades()
 	buildRebirth()
 	buildIndex()
 	buildShop()
 	buildFusion()
+	buildRewards()
 end
 
 return Panels
