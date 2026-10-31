@@ -13,6 +13,7 @@ local ORDER = {
 	"Pets",
 	"HazardFx",
 	"Tutorial",
+	"LikePrompt",
 }
 
 -- In order (Panels needs the HUD's buttons). The tutorial waits for data, so it runs on its own.

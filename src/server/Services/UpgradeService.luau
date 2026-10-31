@@ -35,6 +35,9 @@ function UpgradeService.ApplySpeed(player: Player)
 	if Registry.StealService.IsStealing(player) then
 		speed *= Economy.StolenSlowdown
 	end
+	if Registry.DataService.GetExtra(player, "Thief") then
+		speed *= Economy.RevengeSpeed
+	end
 	humanoid.WalkSpeed = speed
 	Registry.DataService.SetExtra(player, "Speed", math.floor(speed + 0.5))
 end

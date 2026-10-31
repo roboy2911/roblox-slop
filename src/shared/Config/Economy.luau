@@ -55,6 +55,11 @@ Economy.MaxOfflineHours = 4
 Economy.StealHoldBase = 2 -- seconds to hold the Steal prompt
 Economy.StealHoldPerRarity = 0.5 -- + this per rarity tier above Common
 Economy.StealTimeout = 75 -- a stolen dragon goes home if not delivered in time
+-- Revenge: while someone steals from you, you're this much faster...
+Economy.RevengeSpeed = 1.35
+-- ...and bonking your own thief pays this many seconds of your income (at least RevengeMin).
+Economy.RevengeSeconds = 120
+Economy.RevengeMin = 1000
 
 -- Locking your gate.
 function Economy.LockDuration(rebirths: number): number

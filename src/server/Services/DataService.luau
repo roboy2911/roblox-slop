@@ -58,7 +58,8 @@ local function defaults()
 		Daily = { Last = 0, Streak = 0 },
 		Spins = 1, -- one free spin to start
 		Quests = { Day = 0, List = {}, Progress = {}, Claimed = {} },
-		Pet = nil :: string?, -- dragon species that follows you -- day number (UTC) of the last daily claim
+		Pet = nil :: string?, -- dragon species that follows you
+		LikeAsked = false, -- the like/favorite reminder was shown -- day number (UTC) of the last daily claim
 	}
 end
 
@@ -262,6 +263,7 @@ local function snapshot(profile: Profile)
 		Spins = data.Spins,
 		Quests = data.Quests,
 		Pet = data.Pet,
+		LikeAsked = data.LikeAsked,
 		Tutorial = data.Tutorial,
 		NoSave = profile.NoSave,
 	}

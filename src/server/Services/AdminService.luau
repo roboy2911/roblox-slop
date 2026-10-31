@@ -134,6 +134,10 @@ local actions: { [string]: (admin: Player, args: any) -> (boolean, string) } = {
 		Registry.BossService.Land()
 		return true, "The Elder Dragon is landing"
 	end,
+	Rain = function()
+		task.spawn(Registry.EventService.EggRain)
+		return true, "Egg rain started"
+	end,
 	Star = function()
 		Registry.EventService.StarShower()
 		return true, "Star Shower started"

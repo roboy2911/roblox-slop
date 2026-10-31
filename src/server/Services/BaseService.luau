@@ -517,6 +517,13 @@ function BaseService.Start()
 		end
 	end)
 	ProximityPromptService.PromptTriggered:Connect(onPrompt)
+	Remotes.LikeAsked.OnServerEvent:Connect(function(player)
+		local data = Registry.DataService.Get(player)
+		if data then
+			data.LikeAsked = true
+			Registry.DataService.Changed(player)
+		end
+	end)
 	Remotes.TutorialDone.OnServerEvent:Connect(function(player)
 		local data = Registry.DataService.Get(player)
 		if data and not data.Tutorial then

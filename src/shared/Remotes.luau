@@ -22,6 +22,7 @@ local EVENTS = {
 	"ClaimGift", -- (index)
 	"ClaimQuest", -- (quest id)
 	"SetPet", -- (species or nil) choose the dragon that follows you
+	"LikeAsked", -- () the like/favorite reminder was shown (only show it once)
 }
 
 local FUNCTIONS = {

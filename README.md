@@ -135,7 +135,7 @@ Studio-only chat commands:
 ```
 /gold 100000     /rebirth     /give Solaris Golden     /egg Magmaw
 /hatch           /wave        /star                    /speed 10      /reset
-/spins 5         /quests      /boss
+/spins 5         /quests      /boss        /rain
 ```
 
 To test stealing, use **Test > Clients and Servers** with 2 players.

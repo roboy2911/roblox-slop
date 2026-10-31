@@ -12,6 +12,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Dragons = require(ReplicatedStorage.Shared.Config.Dragons)
 local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
+local Format = require(ReplicatedStorage.Shared.Format)
 local Fx = require(ReplicatedStorage.Shared.Fx)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local ModelFactory = require(script.Parent.ModelFactory)
@@ -77,13 +78,39 @@ local function carryModel(thief: Player, species: string, mutation: string?): Mo
 	return model
 end
 
+-- Revenge: while someone is stealing from you, you run faster and see the
+-- thief outlined (client reads the "Thief" extra).
+local function updateRevenge(owner: Player)
+	if not owner.Parent then
+		return
+	end
+	local chasing = nil
+	for thief, theft in thefts do
+		if theft.Owner == owner then
+			chasing = thief.UserId
+		end
+	end
+	Registry.DataService.SetExtra(owner, "Thief", chasing)
+	Registry.UpgradeService.ApplySpeed(owner)
+end
+
 -- Sends the dragon home. Called when the thief fails for any reason.
-function StealService.Fail(thief: Player, reason: string?)
+-- `by` is who bonked them (if anyone).
+function StealService.Fail(thief: Player, reason: string?, by: Player?)
 	local theft = thefts[thief]
 	if not theft then
 		return
 	end
 	thefts[thief] = nil
+	updateRevenge(theft.Owner)
+	if reason == "Bonk" and by and by == theft.Owner and by.Parent then
+		-- You caught your own thief: a revenge bonus on top of getting the dragon back.
+		local income = Registry.BaseService.IncomePerSecond(by)
+		local bonus = math.floor(math.max(Economy.RevengeMin, income * Economy.RevengeSeconds))
+		Registry.DataService.AddGold(by, bonus)
+		Remotes.Notify:FireClient(by, ("🎯 REVENGE! +%s"):format(Format.Gold(bonus)), "Good", "Sell")
+		Remotes.Announce:FireAllClients(("🎯 %s got revenge on %s!"):format(by.DisplayName, thief.DisplayName), Color3.fromRGB(255, 120, 90))
+	end
 	if theft.Model then
 		theft.Model:Destroy()
 	end
@@ -142,12 +169,13 @@ local function start(thief: Player, owner: Player, i: number)
 	}
 	thefts[thief] = theft
 	Registry.BaseService.SetStolen(owner, i, true)
+	updateRevenge(owner)
 	theft.Model = carryModel(thief, slot.Species, slot.Mutation)
 	updateExtras(thief)
 
 	local rarity = Rarities.ByName[Dragons.ByName[slot.Species].Rarity]
 	Remotes.Notify:FireClient(thief, "Run home before they bonk you!", "Warn", "Sneak")
-	Remotes.Notify:FireClient(owner, ("%s is stealing your %s! Bonk them!"):format(thief.DisplayName, slot.Species), "Error", "Alarm")
+	Remotes.Notify:FireClient(owner, ("%s is stealing your %s! REVENGE: you're faster, chase and bonk them!"):format(thief.DisplayName, slot.Species), "Error", "Alarm")
 	if rarity.Order >= 4 then
 		Remotes.Announce:FireAllClients(("%s is stealing %s's %s!"):format(thief.DisplayName, owner.DisplayName, slot.Species), Color3.fromRGB(255, 90, 90))
 	end
@@ -168,6 +196,7 @@ local function complete(thief: Player, theft: Theft)
 		return
 	end
 	thefts[thief] = nil
+	updateRevenge(owner)
 	if theft.Model then
 		theft.Model:Destroy()
 	end

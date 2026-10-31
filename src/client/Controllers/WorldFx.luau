@@ -270,6 +270,55 @@ local function noTripping(character: Model)
 	end
 end
 
+-- ------------------------------------------------------------ revenge
+-- While someone steals your dragon, they glow red for you (through walls).
+
+local thiefHighlight: Highlight? = nil
+local thiefTag: BillboardGui? = nil
+
+local function showThief(userId: number?)
+	if thiefHighlight then
+		thiefHighlight:Destroy()
+		thiefHighlight = nil
+	end
+	if thiefTag then
+		thiefTag:Destroy()
+		thiefTag = nil
+	end
+	local thief = userId and Players:GetPlayerByUserId(userId)
+	local character = thief and thief.Character
+	if not character then
+		return
+	end
+	local h = Instance.new("Highlight")
+	h.FillColor = Color3.fromRGB(255, 50, 50)
+	h.FillTransparency = 0.55
+	h.OutlineColor = Color3.fromRGB(255, 220, 220)
+	h.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
+	h.Adornee = character
+	h.Parent = character
+	thiefHighlight = h
+	local head = character:FindFirstChild("Head")
+	if head then
+		local tag = Instance.new("BillboardGui")
+		tag.Size = UDim2.fromOffset(180, 50)
+		tag.StudsOffset = Vector3.new(0, 6, 0)
+		tag.AlwaysOnTop = true
+		tag.Adornee = head
+		local label = Instance.new("TextLabel")
+		label.BackgroundTransparency = 1
+		label.Size = UDim2.fromScale(1, 1)
+		label.Font = Enum.Font.FredokaOne
+		label.TextScaled = true
+		label.TextColor3 = Color3.fromRGB(255, 80, 80)
+		label.TextStrokeTransparency = 0.1
+		label.Text = "🎯 THIEF!"
+		label.Parent = tag
+		tag.Parent = head
+		thiefTag = tag
+	end
+end
+
 function WorldFx.Start()
 	for _, m in CollectionService:GetTagged("Dragon") do
 		task.spawn(trackDragon, m)
@@ -291,6 +340,13 @@ function WorldFx.Start()
 	task.spawn(trackPrompts)
 
 	State.Watch(updateGates)
+	local shownThief = nil
+	State.Watch(function(data)
+		if data.Thief ~= shownThief then
+			shownThief = data.Thief
+			showThief(data.Thief)
+		end
+	end)
 	CollectionService:GetInstanceAddedSignal("RebirthGate"):Connect(function()
 		updateGates(State.Data)
 	end)
