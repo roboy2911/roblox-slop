@@ -155,6 +155,8 @@ local DECOR_SIZE = {
 	LavaRock = { Height = 4, Collide = Vector3.new(4.5, 3, 4) },
 	IceSpire = { Height = 12, Collide = Vector3.new(2.5, 10, 2.5) },
 	VoidCrystal = { Height = 9, Collide = Vector3.new(3, 7, 3) },
+	RuinPillar = { Height = 11, Collide = Vector3.new(3, 10, 3) },
+	SunCrystal = { Height = 7, Collide = Vector3.new(3, 6, 3) },
 }
 
 local function buildDecor(zoneIndex: number, zone: Zones.Zone, folder: Folder)

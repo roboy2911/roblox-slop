@@ -18,7 +18,8 @@ local list: { Rarity } = {
 	{ Name = "Epic", Order = 4, Color = Color3.fromRGB(190, 85, 255), HatchTime = 40, EggModel = "EggEpic", Scale = 1.25 },
 	{ Name = "Legendary", Order = 5, Color = Color3.fromRGB(255, 190, 40), HatchTime = 75, EggModel = "EggLegendary", Scale = 1.35 },
 	{ Name = "Mythic", Order = 6, Color = Color3.fromRGB(255, 60, 120), HatchTime = 120, EggModel = "EggMythic", Scale = 1.45 },
-	{ Name = "Celestial", Order = 7, Color = Color3.fromRGB(120, 230, 255), HatchTime = 180, EggModel = "EggCelestial", Scale = 1.6 },
+	{ Name = "Divine", Order = 7, Color = Color3.fromRGB(255, 240, 160), HatchTime = 150, EggModel = "EggDivine", Scale = 1.52 },
+	{ Name = "Celestial", Order = 8, Color = Color3.fromRGB(120, 230, 255), HatchTime = 180, EggModel = "EggCelestial", Scale = 1.6 },
 }
 
 local byName: { [string]: Rarity } = {}

@@ -27,11 +27,11 @@ MANIFEST = os.path.join(ROOT, "tools", "asset_manifest.json")
 ASSETS_LUAU = os.path.join(ROOT, "src", "shared", "Config", "Assets.luau")
 
 DRAGONS = ["Mossling", "Pebblewing", "Emberkit", "Reedscale", "Frostfang", "Thornback", "Magmaw", "Stormtail",
-           "Solaris", "Glacius", "Voidwyrm", "Aurora", "Starborn", "ElderDragon"]
-EGGS = ["EggCommon", "EggUncommon", "EggRare", "EggEpic", "EggLegendary", "EggMythic", "EggCelestial"]
+           "Solaris", "Glacius", "Voidwyrm", "Aurora", "Lumiwyrm", "Eclipsar", "Starborn", "ElderDragon"]
+EGGS = ["EggCommon", "EggUncommon", "EggRare", "EggEpic", "EggLegendary", "EggMythic", "EggDivine", "EggCelestial"]
 PROPS = ["CastleWall", "CastleTower", "Gatehouse", "Perch", "WildNest", "FusionAltar", "TreasureChest", "LockPad",
          "Shelter", "ZoneSign", "Tablet", "Club", "PineTree", "OakTree", "Boulder", "LavaRock", "IceSpire",
-         "VoidCrystal", "FlowerBush", "Mushroom"]
+         "VoidCrystal", "FlowerBush", "Mushroom", "RuinPillar", "SunCrystal"]
 MODELS = DRAGONS + EGGS + PROPS
 IMAGES = ["FxGlow", "FxSpark", "FxFlame", "FxSmoke", "FxStar", "FxCoin"]
 # Made by tools/sounds.py (files are Sfx<Name>.wav).

@@ -47,6 +47,11 @@ SPECIES = {
                      horns="long", extra="void", style="void"),
     "Aurora": dict(body=(0.3, 0.9, 0.75), belly=(1.0, 0.95, 1.0), wing=(0.8, 0.45, 1.0), horn=(1.0, 1.0, 1.0),
                    horns="crown", extra="halo", style="aurora"),
+    # Divine (Dragon's Crown, zone 7)
+    "Lumiwyrm": dict(body=(1.0, 0.88, 0.6), belly=(1.0, 0.78, 0.3), wing=(1.0, 0.86, 0.5), horn=(1.0, 0.75, 0.2),
+                     horns="crown", extra="halo", spikes=1.3),
+    "Eclipsar": dict(body=(0.06, 0.05, 0.08), belly=(1.0, 0.72, 0.2), wing=(0.18, 0.12, 0.06), horn=(1.0, 0.75, 0.2),
+                     horns="curled", extra="eclipse", style="eclipse"),
     # Celestial (event only)
     "Starborn": dict(body=(0.05, 0.07, 0.22), belly=(0.95, 0.9, 0.7), wing=(0.15, 0.12, 0.4), horn=(1.0, 0.92, 0.6),
                      horns="crown", extra="stars", style="stars"),
@@ -63,6 +68,8 @@ def body_material(name, look):
         return c.gradient(name, (0.25, 0.85, 0.8), (0.7, 0.4, 1.0), axis="Y", lo=-1.5, hi=1.5)
     if style == "stars":
         return c.starry(name)
+    if style == "eclipse":
+        return c.veins(name, base=look["body"], glow=(1.0, 0.75, 0.2), scale=3.5)
     return c.scales(name, color=look["body"])
 
 
@@ -220,6 +227,19 @@ def baby_dragon(name, look, out):
         parts.append(c.paint(c.sphere(0.18, (0, -1.55, 3.0), scale=(0.8, 0.5, 1.2), segments=8, rings=6), glow))
         for s in (1, -1):
             parts.append(c.paint(c.sphere(0.12, (0.4 * s, 0.2, 1.95), segments=8, rings=6), glow))
+    elif extra == "eclipse":
+        gold = c.metal("EclipseRing", color=(1.0, 0.78, 0.25), scratches=0.06)
+        dark = c.solid("EclipseDisk", (0.02, 0.02, 0.03), 0.3)
+        # A dark sun ringed with gold, right behind the head, with rays pointing out.
+        cx, cy, cz = 0, -0.45, 2.55
+        parts.append(c.paint(c.torus(1.0, 0.08, (cx, cy, cz), rot=(R(90), 0, 0), major_segments=32), gold))
+        parts.append(c.paint(c.cylinder(0.94, 0.05, (cx, cy + 0.04, cz), rot=(R(90), 0, 0), verts=28), dark))
+        for i in range(12):
+            a = R(i * 30)
+            length = 0.45 if i % 2 == 0 else 0.28
+            r = 1.05 + length / 2
+            parts.append(c.paint(c.cylinder(0.07, length, (cx + math.sin(a) * r, cy, cz + math.cos(a) * r),
+                                            rot=(0, a, 0), verts=5, top_radius=0), gold))
     elif extra == "stars":
         star = c.solid("Star", (1.0, 0.92, 0.55), 0.3)
         for x, y, z in ((0.0, -0.9, 3.75), (0.5, 0.4, 2.1), (-0.45, 0.6, 1.95)):

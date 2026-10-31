@@ -321,12 +321,41 @@ def mushroom():
     c.join(parts, "Mushroom")
 
 
+def ruin_pillar():
+    """A broken marble column with gold bands (Dragon's Crown)."""
+    marble = c.stone("Marble", (0.92, 0.9, 0.85))
+    gold = c.metal("PillarGold", color=(1.0, 0.78, 0.25), scratches=0.08)
+    parts = [
+        c.paint(c.box((3.4, 3.4, 0.8), (0, 0, 0.4)), marble),
+        c.paint(c.cylinder(1.2, 7.5, (0, 0, 4.55), verts=16), marble),
+        c.paint(c.cylinder(1.3, 0.3, (0, 0, 1.0), verts=16), gold),
+        c.paint(c.cylinder(1.3, 0.3, (0, 0, 6.0), verts=16), gold),
+    ]
+    # Jagged broken top.
+    for i in range(6):
+        a = R(i * 60)
+        h = 0.5 + (i % 3) * 0.45
+        parts.append(c.paint(c.cylinder(0.45, h, (math.cos(a) * 0.75, math.sin(a) * 0.75, 8.3 + h / 2), verts=5, top_radius=0.1), marble))
+    parts.append(c.paint(c.box((1.2, 0.9, 0.8), (2.2, 0.8, 0.4), rot=(0, 0, R(25))), marble))
+    c.join(parts, "RuinPillar")
+
+
+def sun_crystal():
+    """A cluster of glowing golden crystals."""
+    gem = c.crystal("SunGem", bright=(1.0, 0.97, 0.75), deep=(0.95, 0.55, 0.05))
+    rock = c.stone("SunRock", (0.85, 0.78, 0.62))
+    parts = [c.paint(c.sphere(2.0, (0, 0, 0.4), scale=(1.2, 1.1, 0.45), segments=10, rings=6), rock)]
+    for x, y, h, tx, ty in ((0, 0, 6, 0, 0), (1.2, 0.4, 4, 0, 22), (-1.1, 0.5, 4.4, 0, -20), (0.2, -1.1, 3.5, -22, 0)):
+        parts.append(c.paint(c.cylinder(0.7, h, (x, y, h / 2 + 0.4), rot=(R(tx), R(ty), 0), verts=6, top_radius=0.05), gem))
+    c.join(parts, "SunCrystal")
+
+
 PROPS = {
     "CastleWall": castle_wall, "CastleTower": castle_tower, "Gatehouse": gatehouse,
     "Perch": perch, "WildNest": wild_nest, "FusionAltar": fusion_altar, "TreasureChest": treasure_chest,
     "LockPad": lock_pad, "Shelter": shelter, "ZoneSign": zone_sign, "Tablet": tablet, "Club": club,
     "PineTree": pine_tree, "OakTree": oak_tree, "Boulder": boulder, "LavaRock": lava_rock,
-    "IceSpire": ice_spire, "VoidCrystal": void_crystal, "FlowerBush": flower_bush, "Mushroom": mushroom,
+    "IceSpire": ice_spire, "VoidCrystal": void_crystal, "RuinPillar": ruin_pillar, "SunCrystal": sun_crystal, "FlowerBush": flower_bush, "Mushroom": mushroom,
 }
 
 PREVIEW = {
@@ -340,6 +369,8 @@ PREVIEW = {
     "OakTree": dict(camera=(14, -20, 10), target=(0, 0, 6)),
     "IceSpire": dict(camera=(10, -14, 7), target=(0, 0, 4)),
     "VoidCrystal": dict(camera=(9, -12, 6), target=(0, 0, 3)),
+    "RuinPillar": dict(camera=(10, -14, 8), target=(0, 0, 4.5)),
+    "SunCrystal": dict(camera=(8, -11, 5), target=(0, 0, 2.5)),
 }
 
 

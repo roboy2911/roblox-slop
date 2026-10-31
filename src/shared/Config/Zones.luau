@@ -73,6 +73,15 @@ local zones: { Zone } = {
 		Decor = { "VoidCrystal" },
 		Fog = Color3.fromRGB(150, 100, 220),
 	},
+	{
+		Name = "Dragon's Crown",
+		Rarities = { Divine = 0.85, Mythic = 0.15 },
+		Rebirths = 4,
+		Ground = Enum.Material.Marble,
+		GroundColor = Color3.fromRGB(235, 220, 175),
+		Decor = { "RuinPillar", "SunCrystal" },
+		Fog = Color3.fromRGB(255, 225, 160),
+	},
 } :: any
 
 for i, zone in zones do

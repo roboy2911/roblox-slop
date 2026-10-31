@@ -70,6 +70,21 @@ def celestial_egg():
     return shell, extras
 
 
+def divine_egg():
+    shell = c.speckled("Shell", base=(0.97, 0.95, 0.9), spot=(1.0, 0.82, 0.4), scale=3, amount=0.66)
+    gold = c.metal("Gold", color=(1.0, 0.78, 0.25), scratches=0.06)
+    feather = c.solid("Feather", (1.0, 0.92, 0.65), 0.4)
+    extras = [c.paint(c.torus(0.99, 0.06, (0, 0, 1.1), major_segments=32), gold),
+              c.paint(c.torus(0.8, 0.05, (0, 0, 2.05), major_segments=28), gold),
+              c.paint(c.torus(0.45, 0.05, (0, 0, 3.3), major_segments=20), gold)]
+    # Little golden wings on both sides.
+    for s in (1, -1):
+        for k, (h, w) in enumerate(((0.55, 0.9), (0.42, 0.7), (0.3, 0.5))):
+            verts = [(s * 0.9, 0, 1.55 - k * 0.12), (s * (0.9 + w), 0.05, 1.9 + h - k * 0.15), (s * (0.9 + w * 0.8), 0.05, 1.45 - k * 0.2)]
+            extras.append(c.paint(c.mesh_from(verts, [(0, 1, 2)], "Wing", 0.06), feather))
+    return shell, extras
+
+
 EGGS = {
     "EggCommon": common_egg,
     "EggUncommon": uncommon_egg,
@@ -77,6 +92,7 @@ EGGS = {
     "EggEpic": epic_egg,
     "EggLegendary": legendary_egg,
     "EggMythic": mythic_egg,
+    "EggDivine": divine_egg,
     "EggCelestial": celestial_egg,
 }
 

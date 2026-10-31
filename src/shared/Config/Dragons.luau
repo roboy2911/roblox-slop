@@ -25,6 +25,8 @@ local list: { Species } = {
 	{ Name = "Glacius", Rarity = "Legendary", Income = 1050, Weight = 40, Color = Color3.fromRGB(31, 64, 191), Blurb = "Carved from the oldest ice." },
 	{ Name = "Voidwyrm", Rarity = "Mythic", Income = 4000, Weight = 60, Color = Color3.fromRGB(115, 51, 166), Blurb = "Nobody knows where it came from." },
 	{ Name = "Aurora", Rarity = "Mythic", Income = 4800, Weight = 40, Color = Color3.fromRGB(77, 230, 191), Blurb = "Shimmers every color of the northern sky." },
+	{ Name = "Lumiwyrm", Rarity = "Divine", Income = 10000, Weight = 60, Color = Color3.fromRGB(255, 225, 150), Blurb = "Lives on the summit. Its glow keeps the Elder Dragon calm." },
+	{ Name = "Eclipsar", Rarity = "Divine", Income = 12000, Weight = 40, Color = Color3.fromRGB(30, 25, 35), Blurb = "Born during an eclipse. Wears the sun as a crown." },
 	{ Name = "Starborn", Rarity = "Celestial", Income = 20000, Weight = 100, Color = Color3.fromRGB(40, 50, 140), Blurb = "Fell from the stars. Only falls during star showers." },
 }
 

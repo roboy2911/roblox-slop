@@ -39,6 +39,14 @@
     "id": "83265313920890",
     "sha": "ee06fa57beb25b4179e1398891012be645b161c6cce6e162d671ebc68479b9b7"
   },
+  "Eclipsar.fbx": {
+    "id": "74490338663270",
+    "sha": "f46d28d359d327714ff3f32fc89edc627b2fa05af732305d5206b096de22c75e"
+  },
+  "Eclipsar.png": {
+    "id": "99064408275400",
+    "sha": "06d967de2a71d2f3b98af4175aa9cc84a825e600fc5602c0d92649d122af9a6f"
+  },
   "EggCelestial.fbx": {
     "id": "134106629625087",
     "sha": "d24c94706ff757d01edfcdaacb208d100ebb74a95f27faec2cde420615f3ca75"
@@ -54,6 +62,14 @@
   "EggCommon.png": {
     "id": "98939824371327",
     "sha": "6b9c9f3cfa4a2ea833af5c0caa1d594da695d67d41f76d523da929149a95c36b"
+  },
+  "EggDivine.fbx": {
+    "id": "99555866535037",
+    "sha": "6936f25692855b0dd7e44889a7c6d4d7c0caa5e39671d8f77341dfb9b69bc619"
+  },
+  "EggDivine.png": {
+    "id": "108898147025600",
+    "sha": "966ce16128c6d6131012d6a752fb86b4957b09d10d8fc32a861097a516e4832a"
   },
   "EggEpic.fbx": {
     "id": "95087847194792",
@@ -199,6 +215,14 @@
     "id": "134584648703828",
     "sha": "fcfa72142472269571ec4a6a79506892a79bedffbd429c738fd5bd7d13490f62"
   },
+  "Lumiwyrm.fbx": {
+    "id": "103787807136538",
+    "sha": "8a3455f59e21249f4806da0630e37a23a71f88e07ff4666311cf48ab78e84f39"
+  },
+  "Lumiwyrm.png": {
+    "id": "75637776039811",
+    "sha": "3664aa1751e48801c785b2950f822b5ec763f628f35faafb238c8ab4d8bc0ae9"
+  },
   "Magmaw.fbx": {
     "id": "79676116639288",
     "sha": "77846f726233728f4ac9f58b11c7f72a84195bb88ae5edf2f43722c34cf1c019"
@@ -262,6 +286,14 @@
   "Reedscale.png": {
     "id": "135277966081219",
     "sha": "46f81e05895832ed013842995c202c0bf26d1c43642a9ab65bfc42fa6b92e311"
+  },
+  "RuinPillar.fbx": {
+    "id": "89502498716298",
+    "sha": "6dd486d757d01dbad1b525ccb52cc7fe5855550470bea0d53cef1beaf25b3d51"
+  },
+  "RuinPillar.png": {
+    "id": "94813771657132",
+    "sha": "b6736d8e0f3096fb391feaf763d5148388d1ad104afd1fbacb7545ac5e2d19a6"
   },
   "SfxAlarm.wav": {
     "id": "102442602757157",
@@ -378,6 +410,14 @@
   "Stormtail.png": {
     "id": "85246421837656",
     "sha": "8e991094be7bac8350e3a772c1de93689408e773f261cb55f3ebf5927a866757"
+  },
+  "SunCrystal.fbx": {
+    "id": "111963490796402",
+    "sha": "4ff1df531ce769f5f267dcd3663ffe574b9c48e05cf41ab3f8182737863c15e9"
+  },
+  "SunCrystal.png": {
+    "id": "103108680967200",
+    "sha": "312f5ab81b6fdc488051837a441ce8d922b7d2c26859c9550de27c705a5158c3"
   },
   "Tablet.fbx": {
     "id": "103926455383689",

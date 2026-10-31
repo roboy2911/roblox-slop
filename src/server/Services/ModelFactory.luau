@@ -172,6 +172,16 @@ local builders: { [string]: (Model) -> () } = {
 		part(m, "Crystal", Vector3.new(1, 4.5, 1), CFrame.new(1.2, 2, 0.3) * CFrame.Angles(0, 0, math.rad(-25)), Color3.fromRGB(150, 60, 230), Enum.Material.Neon)
 		ball(m, "Rock", Vector3.new(4.5, 1.2, 4), Vector3.new(0, 0.4, 0), Color3.fromRGB(40, 32, 55), Enum.Material.Slate)
 	end,
+	RuinPillar = function(m)
+		part(m, "Base", Vector3.new(3.4, 0.8, 3.4), CFrame.new(0, 0.4, 0), Color3.fromRGB(235, 230, 220), Enum.Material.Marble)
+		cylinder(m, "Column", 8, 2.4, Vector3.new(0, 4.8, 0), Color3.fromRGB(235, 230, 220), Enum.Material.Marble)
+		cylinder(m, "Band", 0.3, 2.6, Vector3.new(0, 6, 0), Color3.fromRGB(255, 200, 70), Enum.Material.Metal)
+	end,
+	SunCrystal = function(m)
+		part(m, "Crystal", Vector3.new(1.4, 6, 1.4), CFrame.new(0, 3, 0) * CFrame.Angles(0, math.rad(45), 0), Color3.fromRGB(255, 200, 60), Enum.Material.Neon)
+		part(m, "Crystal", Vector3.new(1, 4, 1), CFrame.new(1.2, 2, 0.3) * CFrame.Angles(0, 0, math.rad(-22)), Color3.fromRGB(255, 200, 60), Enum.Material.Neon)
+		ball(m, "Rock", Vector3.new(4.5, 1.2, 4), Vector3.new(0, 0.4, 0), Color3.fromRGB(220, 200, 160), Enum.Material.Sandstone)
+	end,
 	FlowerBush = function(m)
 		ball(m, "Bush", Vector3.new(3.8, 2.4, 3.4), Vector3.new(0, 1.1, 0), Color3.fromRGB(80, 150, 55), Enum.Material.Grass)
 		for i, c in { Color3.fromRGB(255, 130, 180), Color3.fromRGB(255, 225, 70), Color3.fromRGB(250, 250, 245) } do

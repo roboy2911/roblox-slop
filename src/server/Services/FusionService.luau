@@ -1,5 +1,5 @@
 -- The Fusion Altar: three dragons of one rarity become one dragon of the
--- next rarity (three Mythics make a Celestial). Fused dragons are more likely
+-- next rarity (three Mythics make a Divine, three Divines a Celestial). Fused dragons are more likely
 -- to be Golden or Shadow, and a Lucky Fusion charge guarantees one.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
