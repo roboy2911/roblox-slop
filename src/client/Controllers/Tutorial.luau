@@ -6,6 +6,7 @@ local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Layout = require(ReplicatedStorage.Shared.Config.Layout)
+local Zones = require(ReplicatedStorage.Shared.Config.Zones)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local State = require(script.Parent.State)
 local UI = require(script.Parent.UI)
@@ -25,7 +26,7 @@ local function nearestEgg(from: Vector3): Vector3?
 		if egg:IsA("Model") and egg.Parent then
 			local pos = egg:GetPivot().Position
 			local d = (pos - from).Magnitude
-			if pos.Z < 150 and d < bestDist then
+			if pos.Z < Zones.Length and d < bestDist then
 				best, bestDist = pos, d
 			end
 		end

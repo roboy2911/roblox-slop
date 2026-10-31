@@ -25,12 +25,16 @@ WorldService.Nests = {} :: { { CFrame } }
 local world: Folder
 local rng = Random.new(20261031)
 
+-- Rows of shelters in each zone (Z is distance into the zone). About 65 studs
+-- apart, so you can always reach one during the warning if you're paying attention.
 local SHELTER_ROWS = {
 	{ Z = 40, X = { -220, -60, 100, 240 } },
-	{ Z = 110, X = { -150, 20, 180 } },
+	{ Z = 105, X = { -150, 20, 180 } },
+	{ Z = 170, X = { -240, -80, 80, 230 } },
+	{ Z = 235, X = { -160, 10, 170 } },
 }
-local NESTS_PER_ZONE = 14
-local DECOR_PER_ZONE = 28
+local NESTS_PER_ZONE = 20
+local DECOR_PER_ZONE = 45
 
 local function groundPart(name: string, size: Vector3, position: Vector3, material: Enum.Material, color: Color3): Part
 	local p = Instance.new("Part")

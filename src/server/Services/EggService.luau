@@ -22,7 +22,7 @@ local Registry = require(script.Parent.Registry)
 
 local EggService = {}
 
-local MAX_PER_ZONE = 9
+local MAX_PER_ZONE = 13
 local SPAWN_EVERY = 1.5
 local WILD_LIFETIME = 240
 local DROPPED_LIFETIME = 60

@@ -15,9 +15,9 @@ return {
 	CalmDelay = 90,
 
 	Types = {
-		{ Name = "Ember Breath", Speed = 45, Weight = 60, Color = Color3.fromRGB(255, 120, 30), Height = 34 },
-		{ Name = "Swift Dive", Speed = 80, Weight = 25, Color = Color3.fromRGB(255, 50, 40), Height = 26 },
-		{ Name = "Blue Inferno", Speed = 32, Weight = 15, Color = Color3.fromRGB(70, 140, 255), Height = 50 },
+		{ Name = "Ember Breath", Speed = 75, Weight = 60, Color = Color3.fromRGB(255, 120, 30), Height = 34 },
+		{ Name = "Swift Dive", Speed = 125, Weight = 25, Color = Color3.fromRGB(255, 50, 40), Height = 26 },
+		{ Name = "Blue Inferno", Speed = 55, Weight = 15, Color = Color3.fromRGB(70, 140, 255), Height = 50 },
 	},
 
 	-- Safe spot under each shelter (relative to the shelter's base). Half sizes.

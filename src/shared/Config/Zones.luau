@@ -16,7 +16,7 @@ export type Zone = {
 	Fog: Color3,
 }
 
-local LENGTH = 150
+local LENGTH = 260
 
 local zones: { Zone } = {
 	{
