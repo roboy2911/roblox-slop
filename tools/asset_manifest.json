@@ -1,4 +1,20 @@
 {
+  "Aurora.fbx": {
+    "id": "72839953514419",
+    "sha": "dba9b5b193b8fc4a831fcd4e638d89bd08034df42651b4367b0af6ef4d999815"
+  },
+  "Aurora.png": {
+    "id": "125792514134219",
+    "sha": "fa4f7511302ed5578185b7ac2a12c7525b060e723942cb247be629a519fa6572"
+  },
+  "ElderDragon.fbx": {
+    "id": "129984910251841",
+    "sha": "23566878732569336740f8d82bd66e85c3839956f913f666e8a8563b05f5ae73"
+  },
+  "ElderDragon.png": {
+    "id": "73295430571522",
+    "sha": "4552c2969f64b73ecc1260d63cae7349fa7d09eab01dc5534940a9d0efeeffe5"
+  },
   "Emberkit.fbx": {
     "id": "99405635754474",
     "sha": "04d7c74a4ef1b533cd2872a94f93dd05c998287aaad478a115ea9f8de6611437"
@@ -63,6 +79,14 @@
     "id": "134466627787478",
     "sha": "7fa3592408bc5f3842b52ffa1f28f65ce43794fee0bc0f6bd27c98dddf96ffc0"
   },
+  "Starborn.fbx": {
+    "id": "110912923343600",
+    "sha": "5ecab993ded90d4a89abc9bd8350bdae34b0c155e2b2e0fe0808b1daae06c7cd"
+  },
+  "Starborn.png": {
+    "id": "114328333563186",
+    "sha": "fe2fcbaa2ae64ac1a9d02e5483e535f3b6e44c39cbb4fd23a178dc929e13cb24"
+  },
   "Stormtail.fbx": {
     "id": "123922122384074",
     "sha": "2b827fa1729cdd9bd5d79b9c1a7b0df54335c07ff8ac730ae7ab07b0b1e34438"
@@ -82,5 +106,9 @@
   "Voidwyrm.fbx": {
     "id": "81399061172975",
     "sha": "6ca14782465c9ac5ef8772dce3630fdc95346a0f9abba69895f4cc9c170122bf"
+  },
+  "Voidwyrm.png": {
+    "id": "109975502498397",
+    "sha": "ef2e3ae417c4c779df75972f681202802652d71216c6e311f4501374c53e8e61"
   }
 }
