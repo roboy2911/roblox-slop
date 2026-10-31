@@ -150,17 +150,20 @@ local function buildPlot(index: number): Plot
 	plot.LockPad = ModelFactory.Place("LockPad", local3(plot, Layout.LockPad), Vector3.new(0, 0, -1), 1.6, folder)
 
 	-- Fusion prompt (only the owner sees it; the client hides the rest).
-	local altarPart = plot.Altar:FindFirstChildWhichIsA("BasePart") :: BasePart
+	-- Its own invisible part, so the prompt sits still at the altar
+	-- (the altar's crystal floats around on the client).
+	local promptPart = ModelFactory.Collider(Vector3.new(1, 1, 1), CFrame.new(local3(plot, Layout.Altar) + Vector3.new(0, 3, 0)), folder, "FusePromptPart")
+	promptPart.CanCollide = false
+	promptPart.CanQuery = false
 	local attach = Instance.new("Attachment")
 	attach.Name = "PromptPoint"
-	attach.WorldPosition = local3(plot, Layout.Altar) + Vector3.new(0, 3, 0)
-	attach.Parent = altarPart
+	attach.Parent = promptPart
 	local prompt = Instance.new("ProximityPrompt")
 	prompt.Name = "FusePrompt"
 	prompt.ActionText = "Fuse Dragons"
 	prompt.ObjectText = "Fusion Altar"
 	prompt.KeyboardKeyCode = Enum.KeyCode.E
-	prompt.MaxActivationDistance = 10
+	prompt.MaxActivationDistance = 12
 	prompt.RequiresLineOfSight = false
 	prompt:SetAttribute("Kind", "Fuse")
 	prompt:SetAttribute("Plot", index)
