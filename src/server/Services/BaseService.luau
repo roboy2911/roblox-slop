@@ -173,7 +173,7 @@ function BaseService.RenderSlot(player: Player, i: number)
 		Fx.Mutation(main, slot.Mutation)
 	end
 
-	local income = Income.Slot(slot) * Income.Multiplier(data, Registry.ShopService.HasPass(player, "DoubleGold"))
+	local income = Income.Slot(slot) * Income.Multiplier(data, Registry.ShopService.HasPass(player, "DoubleGold")) * (1 + Registry.SocialService.FriendBonus(player))
 	local _, title, sub = billboard(anchor, DRAGON_HEIGHT * rarity.Scale + 0.5)
 	title.Text = (if slot.Mutation then slot.Mutation .. " " else "") .. species.Name
 	title.TextColor3 = if slot.Mutation then Dragons.MutationByName[slot.Mutation].Color else rarity.Color
@@ -249,11 +249,15 @@ function BaseService.IncomePerSecond(player: Player): number
 	if not data then
 		return 0
 	end
-	return Income.PerSecond(data, Registry.ShopService.HasPass(player, "DoubleGold"))
+	return Income.PerSecond(data, Registry.ShopService.HasPass(player, "DoubleGold")) * (1 + Registry.SocialService.FriendBonus(player))
 end
 
 local function refreshIncome(player: Player)
 	Registry.DataService.SetExtra(player, "Income", BaseService.IncomePerSecond(player))
+end
+
+BaseService.RefreshIncome = function(player: Player)
+	refreshIncome(player)
 end
 
 function BaseService.FreeSlots(player: Player): number

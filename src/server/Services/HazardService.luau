@@ -110,6 +110,15 @@ function HazardService.Calm(player: Player)
 	Remotes.Announce:FireAllClients(("%s calmed the Elder Dragon! It sleeps for %d more seconds."):format(player.DisplayName, Hazard.CalmDelay), Color3.fromRGB(140, 220, 255))
 end
 
+-- Pushes the next wave back so it starts at least `seconds` from now (quietly).
+function HazardService.Delay(seconds: number)
+	local nextAt = state:GetAttribute("NextAt") :: number
+	local target = workspace:GetServerTimeNow() + seconds
+	if nextAt < target then
+		state:SetAttribute("NextAt", target)
+	end
+end
+
 -- Starts a wave right away (dev command).
 function HazardService.TriggerNow()
 	state:SetAttribute("NextAt", workspace:GetServerTimeNow() + Hazard.Warning)

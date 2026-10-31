@@ -135,7 +135,7 @@ Studio-only chat commands:
 ```
 /gold 100000     /rebirth     /give Solaris Golden     /egg Magmaw
 /hatch           /wave        /star                    /speed 10      /reset
-/spins 5         /quests
+/spins 5         /quests      /boss
 ```
 
 To test stealing, use **Test > Clients and Servers** with 2 players.
@@ -155,6 +155,8 @@ All numbers live in `src/shared/Config/`:
 | `Rewards.luau` | daily streak rewards (7 days) and playtime gifts |
 | `Spin.luau` | prize wheel slices and how often free spins come |
 | `Quests.luau` | the daily quest pool and rewards |
+| `Boss.luau` | Elder Dragon boss: how often it lands, health, stomps, rewards |
+| `../Boosts.luau` | weekend luck and friend bonus amounts |
 | `Codes.luau` | redeem codes (`DRAGONS`, `HEIST`, `LUCKY`) |
 | `Sounds.luau` | sound volumes, and overrides if you want to swap in your own sounds |
 

@@ -7,6 +7,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Dragons = require(ReplicatedStorage.Shared.Config.Dragons)
 local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
+local Boosts = require(ReplicatedStorage.Shared.Boosts)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local Registry = require(script.Parent.Registry)
 
@@ -60,7 +61,7 @@ local function fuse(player: Player, picked: any)
 		data.LuckyFusions -= 1
 		mutation = if rng:NextNumber() < 0.3 then "Shadow" else "Golden"
 	else
-		mutation = Dragons.RollMutation(Economy.FuseMutationLuck, rng)
+		mutation = Dragons.RollMutation(Economy.FuseMutationLuck * Boosts.Luck(), rng)
 	end
 
 	for _, i in slots do

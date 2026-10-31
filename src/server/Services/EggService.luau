@@ -15,6 +15,7 @@ local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
 local Zones = require(ReplicatedStorage.Shared.Config.Zones)
 local Format = require(ReplicatedStorage.Shared.Format)
+local Boosts = require(ReplicatedStorage.Shared.Boosts)
 local Fx = require(ReplicatedStorage.Shared.Fx)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local ModelFactory = require(script.Parent.ModelFactory)
@@ -138,7 +139,7 @@ local function spawnInZone(zoneIndex: number)
 	local nestIndex = free[rng:NextInteger(1, #free)]
 	local rarity = Zones.RollRarity(zone, rng)
 	local species = Dragons.RollSpecies(rarity, rng)
-	local info = { Species = species.Name, Mutation = Dragons.RollMutation(1, rng) }
+	local info = { Species = species.Name, Mutation = Dragons.RollMutation(Boosts.Luck(), rng) }
 	spawnWild(info, nests[nestIndex] * CFrame.new(0, 0.5, 0), zoneIndex, WILD_LIFETIME, zoneIndex * 1000 + nestIndex)
 end
 

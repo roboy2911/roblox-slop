@@ -5,6 +5,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
 local Hazard = require(ReplicatedStorage.Shared.Config.Hazard)
+local Boosts = require(ReplicatedStorage.Shared.Boosts)
 local Format = require(ReplicatedStorage.Shared.Format)
 local State = require(script.Parent.State)
 local UI = require(script.Parent.UI)
@@ -53,6 +54,27 @@ local function buildStats()
 	speedLabel.TextXAlignment = Enum.TextXAlignment.Left
 	lockLabel = UI.Label(box, "🔓 Unlocked", UDim2.new(1, -20, 0, 26), UDim2.fromOffset(10, 78), UI.Colors.Muted)
 	lockLabel.TextXAlignment = Enum.TextXAlignment.Left
+end
+
+local boostBox: Frame
+local boostLabel: TextLabel
+
+local function buildBoosts()
+	boostBox = pill(gui, UDim2.fromOffset(170, 34), UDim2.fromOffset(12, 128), UI.Colors.Green)
+	boostLabel = UI.Label(boostBox, "", UDim2.new(1, -16, 1, -8), UDim2.fromOffset(8, 4))
+	boostBox.Visible = false
+end
+
+local function updateBoosts(data)
+	local parts = {}
+	if Boosts.IsWeekend() then
+		table.insert(parts, "🍀 2x Luck")
+	end
+	if (data.FriendBonus or 0) > 0 then
+		table.insert(parts, ("👥 +%d%%"):format(math.floor(data.FriendBonus * 100 + 0.5)))
+	end
+	boostBox.Visible = #parts > 0
+	boostLabel.Text = table.concat(parts, "  ")
 end
 
 local function buildWave()
@@ -113,6 +135,13 @@ function HUD.SetBadge(name: string, count: number)
 end
 
 local function updateWave()
+	if workspace:GetAttribute("BossActive") then
+		local now = workspace:GetServerTimeNow()
+		waveText.Text = "🐉 THE ELDER DRAGON LANDED! Bonk it for treasure!"
+		waveFill.Size = UDim2.new(1, -10, 1, -10)
+		waveFill.BackgroundColor3 = if math.floor(now * 2) % 2 == 0 then UI.Colors.Red else UI.Colors.Orange
+		return
+	end
 	local state = ReplicatedStorage:FindFirstChild("Hazard")
 	if not state then
 		waveText.Text = "🐉 The Elder Dragon sleeps..."
@@ -144,6 +173,7 @@ local function updateWave()
 end
 
 local function onState(data)
+	updateBoosts(data)
 	incomeLabel.Text = "+" .. Format.Gold(data.Income or 0) .. "/s"
 	carryLabel.Text = ("🥚 %d/%d"):format(data.Carrying or 0, data.Capacity or 1)
 	if data.Stealing then
@@ -156,6 +186,7 @@ function HUD.Start()
 	gui = UI.Screen("HUD", 1)
 	buildGold()
 	buildStats()
+	buildBoosts()
 	buildWave()
 	buildMenu()
 	State.Watch(onState)

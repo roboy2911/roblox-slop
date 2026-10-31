@@ -164,7 +164,7 @@ local function buildIndex()
 	local panel = UI.Panel("📖 Dragon Index", UI.Colors.Green, UDim2.fromScale(0.6, 0.7))
 	local header = UI.Label(panel.Body, "", UDim2.new(1, 0, 0, 30), UDim2.new(), UI.Colors.Muted)
 	local grid = UI.Grid(panel.Body, UDim2.fromOffset(130, 160), UDim2.fromOffset(0, 36), UDim2.new(1, 0, 1, -36))
-	local shownFor: { [string]: boolean } = {}
+	local shownFor: { [string]: string } = {}
 	local cards: { [string]: Frame } = {}
 
 	local function refresh(data)
@@ -176,14 +176,16 @@ local function buildIndex()
 			found += 1
 		end
 		local done = Income.CompletedRarities(data.Discovered)
-		header.Text = ("Found %d/%d  •  Complete a rarity for +%d%% income (now +%d%%)"):format(found, #Dragons.List,
+		header.Text = ("Found %d/%d  •  Click one to make it your pet  •  Rarity sets +%d%% gold (now +%d%%)"):format(found, #Dragons.List,
 			math.floor(Economy.IndexBonusPerRarity * 100), math.floor(done * Economy.IndexBonusPerRarity * 100))
 		for order, species in Dragons.List do
 			local discovered = data.Discovered[species.Name] == true
-			if shownFor[species.Name] == discovered and cards[species.Name] then
+			local isPet = data.Pet == species.Name
+			local key = tostring(discovered) .. tostring(isPet)
+			if shownFor[species.Name] == key and cards[species.Name] then
 				continue
 			end
-			shownFor[species.Name] = discovered
+			shownFor[species.Name] = key
 			if cards[species.Name] then
 				cards[species.Name]:Destroy()
 			end
@@ -191,13 +193,27 @@ local function buildIndex()
 			local c = UI.Frame(grid, UDim2.new(), nil, UI.Colors.PanelLight)
 			c.LayoutOrder = order
 			UI.Corner(c, 12)
-			UI.Stroke(c, rarity.Color, 3)
+			UI.Stroke(c, if isPet then UI.Colors.Gold else rarity.Color, if isPet then 4 else 3)
 			local view = UI.Frame(c, UDim2.new(1, -8, 0, 92), UDim2.fromOffset(4, 4))
 			view.BackgroundTransparency = 1
 			Preview.Make(view, species.Name, not discovered)
 			UI.Label(c, if discovered then species.Name else "???", UDim2.new(1, -8, 0, 24), UDim2.fromOffset(4, 98))
 			UI.Label(c, rarity.Name, UDim2.new(1, -8, 0, 18), UDim2.fromOffset(4, 120), rarity.Color)
-			UI.Label(c, if discovered then Format.Gold(species.Income) .. "/s" else "", UDim2.new(1, -8, 0, 16), UDim2.fromOffset(4, 140), UI.Colors.Green)
+			UI.Label(c, if isPet then "🐾 Your pet" elseif discovered then Format.Gold(species.Income) .. "/s" else "", UDim2.new(1, -8, 0, 16), UDim2.fromOffset(4, 140),
+				if isPet then UI.Colors.Gold else UI.Colors.Green)
+			if discovered then
+				-- Click a dragon you've found to make it your pet (click again to put it away).
+				local click = Instance.new("TextButton")
+				click.BackgroundTransparency = 1
+				click.Text = ""
+				click.Size = UDim2.fromScale(1, 1)
+				click.ZIndex = 5
+				click.Parent = c
+				click.Activated:Connect(function()
+					Notifications.Sound("Click")
+					Remotes.SetPet:FireServer(if isPet then nil else species.Name)
+				end)
+			end
 			cards[species.Name] = c
 		end
 	end

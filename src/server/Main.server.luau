@@ -19,6 +19,8 @@ local ORDER = {
 	"BonkService",
 	"EventService",
 	"RewardService",
+	"BossService",
+	"SocialService",
 	"SpinService",
 	"QuestService",
 	"LeaderboardService",

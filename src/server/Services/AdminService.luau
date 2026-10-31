@@ -127,6 +127,13 @@ local actions: { [string]: (admin: Player, args: any) -> (boolean, string) } = {
 		Registry.HazardService.Calm(admin)
 		return true, "Calmed the dragon"
 	end,
+	Boss = function()
+		if Registry.BossService.IsActive() then
+			return false, "The Elder Dragon is already here."
+		end
+		Registry.BossService.Land()
+		return true, "The Elder Dragon is landing"
+	end,
 	Star = function()
 		Registry.EventService.StarShower()
 		return true, "Star Shower started"

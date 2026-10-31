@@ -57,7 +57,8 @@ local function defaults()
 		Starter = false,
 		Daily = { Last = 0, Streak = 0 },
 		Spins = 1, -- one free spin to start
-		Quests = { Day = 0, List = {}, Progress = {}, Claimed = {} }, -- day number (UTC) of the last daily claim
+		Quests = { Day = 0, List = {}, Progress = {}, Claimed = {} },
+		Pet = nil :: string?, -- dragon species that follows you -- day number (UTC) of the last daily claim
 	}
 end
 
@@ -260,6 +261,7 @@ local function snapshot(profile: Profile)
 		LuckyFusions = data.LuckyFusions,
 		Spins = data.Spins,
 		Quests = data.Quests,
+		Pet = data.Pet,
 		Tutorial = data.Tutorial,
 		NoSave = profile.NoSave,
 	}

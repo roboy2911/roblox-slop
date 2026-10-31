@@ -10,6 +10,7 @@ local ORDER = {
 	"Panels",
 	"AdminPanel",
 	"WorldFx",
+	"Pets",
 	"HazardFx",
 	"Tutorial",
 }

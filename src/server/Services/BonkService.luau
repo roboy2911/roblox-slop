@@ -67,6 +67,9 @@ local function swing(player: Player, tool: Tool)
 	if not root then
 		return
 	end
+	if Registry.BossService.TryHit(player, root) then
+		return
+	end
 	local best, bestDist = nil, Economy.BonkRange
 	for _, other in Players:GetPlayers() do
 		if other ~= player and other.Character then

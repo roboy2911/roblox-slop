@@ -12,6 +12,7 @@ local EVENTS = {
 	"Knockback", -- (velocity) you got bonked
 	"NewDragon", -- (species, mutation, isNew) an egg hatched / a fusion finished
 	"Collected", -- (amount) you picked up gold from your chest
+	"BossHit", -- (hits left) you bonked the Elder Dragon
 	-- client -> server
 	"BuyUpgrade", -- (kind) "Speed" | "Carry" | "Perch"
 	"Rebirth", -- ()
@@ -20,6 +21,7 @@ local EVENTS = {
 	"ClaimDaily", -- ()
 	"ClaimGift", -- (index)
 	"ClaimQuest", -- (quest id)
+	"SetPet", -- (species or nil) choose the dragon that follows you
 }
 
 local FUNCTIONS = {

@@ -8,6 +8,7 @@
 --   /wave               start a fire wave in a few seconds
 --   /star               start a Star Shower (Celestial egg)
 --   /speed 10           set speed level
+--   /boss               the Elder Dragon lands now
 --   /spins 5            add wheel spins
 --   /quests             finish all of today's quests
 --   /reset              wipe your data (kicks you; rejoin to start fresh)
@@ -67,6 +68,8 @@ local function run(player: Player, message: string)
 	elseif command == "/speed" then
 		data.SpeedLevel = math.clamp(tonumber(args[2]) or 10, 0, Economy.MaxSpeedLevel)
 		Registry.UpgradeService.ApplySpeed(player)
+	elseif command == "/boss" then
+		Registry.BossService.Land()
 	elseif command == "/spins" then
 		data.Spins += tonumber(args[2]) or 5
 	elseif command == "/quests" then

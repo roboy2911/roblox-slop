@@ -14,6 +14,7 @@ return {
 		{ Id = "fuse", Stat = "Fuse", Goal = 1, Text = "Fuse dragons %d time", Reward = { Gold = { Seconds = 900, Min = 3000 }, Spins = 1 } },
 		{ Id = "upgrade", Stat = "Upgrade", Goal = 3, Text = "Buy %d upgrades", Reward = { Gold = { Seconds = 300, Min = 1000 }, Spins = 1 } },
 		{ Id = "collect", Stat = "Collect", Goal = 20, Text = "Collect gold from your chest %d times", Reward = { Gold = { Seconds = 600, Min = 2000 }, Spins = 1 } },
+		{ Id = "boss", Stat = "Boss", Goal = 1, Text = "Help beat the Elder Dragon %d time", Reward = { Egg = { Rarity = "Legendary" }, Spins = 2 } },
 		{ Id = "play", Stat = "Minutes", Goal = 20, Text = "Play for %d minutes", Reward = { Egg = { Rarity = "Epic" }, Spins = 2 } },
 	},
 }

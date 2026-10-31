@@ -200,6 +200,24 @@ function Notifications.Start()
 	Remotes.Announce.OnClientEvent:Connect(Notifications.Banner)
 	Remotes.NewDragon.OnClientEvent:Connect(Notifications.Dragon)
 	Remotes.Collected.OnClientEvent:Connect(Notifications.Collected)
+
+	-- Bonking the Elder Dragon boss: a big "BONK!" with hits left.
+	local bonkLabel = UI.Label(gui, "", UDim2.fromOffset(420, 60), UDim2.new(0.5, -210, 0.28, 0), UI.Colors.Orange)
+	bonkLabel.Visible = false
+	local shownAt = 0
+	Remotes.BossHit.OnClientEvent:Connect(function(left)
+		Notifications.Sound("Bonk", 1, 0.8 + math.random() * 0.4)
+		bonkLabel.Text = if left > 0 then ("💥 BONK! %d to go"):format(left) else "💥 FINAL BONK!"
+		bonkLabel.Visible = true
+		bonkLabel.Rotation = math.random(-8, 8)
+		UI.Pop(bonkLabel, 1.4)
+		shownAt = os.clock()
+		task.delay(0.9, function()
+			if os.clock() - shownAt >= 0.85 then
+				bonkLabel.Visible = false
+			end
+		end)
+	end)
 end
 
 return Notifications
