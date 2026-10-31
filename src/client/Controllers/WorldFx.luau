@@ -200,7 +200,7 @@ local function trackPrompts()
 	end)
 	ProximityPromptService.PromptTriggered:Connect(function(prompt)
 		if prompt:GetAttribute("Kind") == "Grab" then
-			Notifications.Sound("Grab", 0.6)
+			Notifications.Sound("Grab", 1, 0.9 + math.random() * 0.2)
 		end
 	end)
 end
@@ -233,7 +233,7 @@ local function onKnockback(velocity: Vector3)
 	end
 	humanoid:ChangeState(Enum.HumanoidStateType.FallingDown)
 	root.AssemblyLinearVelocity = velocity
-	Notifications.Sound("Bonk", 0.8)
+	Notifications.Sound("Bonk")
 	-- A quick camera shake.
 	local camera = workspace.CurrentCamera
 	local started = os.clock()
@@ -279,6 +279,22 @@ function WorldFx.Start()
 		updateGates(State.Data)
 	end)
 	Remotes.Knockback.OnClientEvent:Connect(onKnockback)
+
+	-- Whoosh when you swing the club.
+	local function hookTools(character: Model)
+		character.ChildAdded:Connect(function(child)
+			if child:IsA("Tool") and not child:GetAttribute("SwingHooked") then
+				child:SetAttribute("SwingHooked", true)
+				child.Activated:Connect(function()
+					Notifications.Sound("Swing", 1, 0.9 + math.random() * 0.25)
+				end)
+			end
+		end)
+	end
+	if player.Character then
+		hookTools(player.Character)
+	end
+	player.CharacterAdded:Connect(hookTools)
 
 	RunService.RenderStepped:Connect(function()
 		local now = os.clock()

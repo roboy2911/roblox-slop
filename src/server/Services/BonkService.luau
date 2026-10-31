@@ -92,7 +92,7 @@ local function swing(player: Player, tool: Tool)
 	Remotes.Knockback:FireClient(best, dir.Unit * Economy.BonkKnockback + Vector3.new(0, 28, 0))
 	Registry.EggService.DropAll(best, "Bonk")
 	Registry.StealService.Fail(best, "Bonk")
-	Remotes.Notify:FireClient(player, "BONK!", "Good")
+	Remotes.Notify:FireClient(player, "BONK!", "Good", "Bonk")
 end
 
 local function give(player: Player)

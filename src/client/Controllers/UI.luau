@@ -3,6 +3,8 @@
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
 
+local SoundFx = require(script.Parent.SoundFx)
+
 local UI = {}
 
 UI.Font = Enum.Font.FredokaOne
@@ -143,6 +145,9 @@ function UI.Button(parent: Instance, text: string, color: Color3, size: UDim2, p
 	end)
 	b.MouseButton1Up:Connect(function()
 		TweenService:Create(scale, TweenInfo.new(0.2, Enum.EasingStyle.Back), { Scale = 1.05 }):Play()
+	end)
+	b.Activated:Connect(function()
+		SoundFx.Play("Click")
 	end)
 	if onClick then
 		b.Activated:Connect(onClick)

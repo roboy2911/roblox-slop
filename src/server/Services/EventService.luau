@@ -38,7 +38,7 @@ function EventService.StarShower()
 	beam.Parent = egg
 	egg:SetAttribute("Celestial", true)
 
-	Remotes.Announce:FireAllClients(("⭐ A Celestial Egg fell in %s! Grab it before it fades!"):format(zone.Name), Color3.fromRGB(150, 230, 255))
+	Remotes.Announce:FireAllClients(("⭐ A Celestial Egg fell in %s! Grab it before it fades!"):format(zone.Name), Color3.fromRGB(150, 230, 255), "Star")
 end
 
 function EventService.Start()

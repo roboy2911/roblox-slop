@@ -9,6 +9,7 @@ local Hazard = require(ReplicatedStorage.Shared.Config.Hazard)
 local Zones = require(ReplicatedStorage.Shared.Config.Zones)
 local Fx = require(ReplicatedStorage.Shared.Fx)
 local Notifications = require(script.Parent.Notifications)
+local SoundFx = require(script.Parent.SoundFx)
 
 local HazardFx = {}
 
@@ -21,6 +22,8 @@ local emitters: { ParticleEmitter } = {}
 local dragon: Model? = nil
 local dragonParts: { { Part: BasePart, Offset: CFrame, Hinge: Vector3?, Side: number } } = {}
 local tint: ColorCorrectionEffect
+local fireSound: Sound? = nil
+local fireAttach: Attachment
 local warnedFor = 0
 local roaredFor = 0
 
@@ -65,6 +68,12 @@ local function buildWall()
 		e.Size = NumberSequence.new({ NumberSequenceKeypoint.new(0, 10), NumberSequenceKeypoint.new(0.6, 14), NumberSequenceKeypoint.new(1, 2) })
 		table.insert(emitters, e)
 	end
+	-- The sound slides along the wall to stay level with you, so it's loud everywhere along it.
+	fireAttach = Instance.new("Attachment")
+	fireAttach.Name = "FireSound"
+	fireAttach.Parent = wall
+	fireSound = SoundFx.Attach("Fire", fireAttach, 260)
+
 	local light = Instance.new("PointLight")
 	light.Range = 60
 	light.Brightness = 4
@@ -111,6 +120,13 @@ local function poseDragon(pivot: CFrame, flap: number)
 end
 
 local function setFire(on: boolean, color: Color3, height: number)
+	if fireSound then
+		if on and not fireSound.IsPlaying then
+			fireSound:Play()
+		elseif not on and fireSound.IsPlaying then
+			fireSound:Stop()
+		end
+	end
 	for _, e in emitters do
 		e.Rate = if on then 30 else 0
 		e.Color = ColorSequence.new(color:Lerp(Color3.new(1, 1, 0.6), 0.5), color)
@@ -175,18 +191,19 @@ local function update()
 	if t > -Hazard.Warning and t < 0 and warnedFor ~= nextAt then
 		warnedFor = nextAt
 		markers = nil -- rescan; more of the map may have streamed in
-		Notifications.Banner(("🐉 %s INCOMING! Hide under a glowing rock shelter!"):format(info.Name:upper()), info.Color)
+		Notifications.Banner(("🐉 %s INCOMING! Hide under a glowing rock shelter!"):format(info.Name:upper()), info.Color, "Warning")
 	end
 
 	if t >= 0 and t <= duration then
 		if roaredFor ~= nextAt then
 			roaredFor = nextAt
-			Notifications.Sound("Roar", 0.9)
-			Notifications.Sound("Fire", 0.6)
+			Notifications.Sound("Roar")
 		end
 		local z = fromZ - speed * t
 		setFire(true, info.Color, info.Height)
 		wall.CFrame = CFrame.new(0, info.Height / 2, z)
+		local camX = camera and camera.CFrame.Position.X or 0
+		fireAttach.Position = Vector3.new(math.clamp(camX, -WIDTH / 2, WIDTH / 2), -info.Height / 2 + 4, 0)
 		glow.CFrame = CFrame.new(0, 0.3, z + 18)
 		if dragon then
 			local x = math.sin(t * 0.9) * (Zones.HalfWidth * 0.6)

@@ -31,7 +31,7 @@ function RebirthService.Rebirth(player: Player)
 	Registry.BaseService.RefreshLabels(player)
 	Registry.LeaderboardService.Update(player)
 	Remotes.Announce:FireAllClients(("%s reached Rebirth %d!"):format(player.DisplayName, data.Rebirths), Color3.fromRGB(200, 140, 255))
-	Remotes.Notify:FireClient(player, ("Rebirth %d! Income is now x%s."):format(data.Rebirths, tostring(Economy.IncomeMultiplier(data.Rebirths))), "Good")
+	Remotes.Notify:FireClient(player, ("Rebirth %d! Income is now x%s."):format(data.Rebirths, tostring(Economy.IncomeMultiplier(data.Rebirths))), "Good", "Rebirth")
 end
 
 function RebirthService.Start()

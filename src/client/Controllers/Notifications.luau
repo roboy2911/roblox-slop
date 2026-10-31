@@ -1,18 +1,17 @@
 -- Toasts, server-wide banners, the "NEW DRAGON!" popup, and gold-collect effects.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local SoundService = game:GetService("SoundService")
 local TweenService = game:GetService("TweenService")
 local RunService = game:GetService("RunService")
 
 local Dragons = require(ReplicatedStorage.Shared.Config.Dragons)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
-local Sounds = require(ReplicatedStorage.Shared.Config.Sounds)
 local Format = require(ReplicatedStorage.Shared.Format)
 local Income = require(ReplicatedStorage.Shared.Income)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local HUD = require(script.Parent.HUD)
 local Preview = require(script.Parent.Preview)
+local SoundFx = require(script.Parent.SoundFx)
 local State = require(script.Parent.State)
 local UI = require(script.Parent.UI)
 
@@ -29,27 +28,11 @@ local KIND_COLORS = {
 	Info = Color3.fromRGB(70, 130, 230),
 }
 
-function Notifications.Sound(name: string, volume: number?)
-	local id = Sounds[name]
-	if not id or id == "" then
-		return
-	end
-	local s = Instance.new("Sound")
-	s.SoundId = id
-	s.Volume = volume or 0.6
-	s.Parent = SoundService
-	s:Play()
-	s.Ended:Connect(function()
-		s:Destroy()
-	end)
-	task.delay(10, function()
-		if s.Parent then
-			s:Destroy()
-		end
-	end)
+function Notifications.Sound(name: string, volume: number?, pitch: number?)
+	SoundFx.Play(name, volume, pitch)
 end
 
-function Notifications.Toast(text: string, kind: string?)
+function Notifications.Toast(text: string, kind: string?, sound: string?)
 	local color = KIND_COLORS[kind or "Info"] or KIND_COLORS.Info
 	local f = UI.Frame(toastHolder, UDim2.new(1, 0, 0, 44), nil, color)
 	f.LayoutOrder = -math.floor(os.clock() * 100)
@@ -59,8 +42,10 @@ function Notifications.Toast(text: string, kind: string?)
 	local l = UI.Label(f, text, UDim2.new(1, -16, 1, -10), UDim2.fromOffset(8, 5))
 	l.TextWrapped = true
 	UI.Pop(f, 1.2)
-	if kind == "Error" then
-		Notifications.Sound("Error", 0.4)
+	if sound then
+		Notifications.Sound(sound)
+	elseif kind == "Error" then
+		Notifications.Sound("Error")
 	end
 	task.delay(4, function()
 		TweenService:Create(f, TweenInfo.new(0.3), { BackgroundTransparency = 1 }):Play()
@@ -83,7 +68,7 @@ function Notifications.Toast(text: string, kind: string?)
 	end
 end
 
-function Notifications.Banner(text: string, color: Color3?)
+function Notifications.Banner(text: string, color: Color3?, sound: string?)
 	local f = UI.Frame(bannerHolder, UDim2.new(1, 0, 0, 52), nil, UI.Colors.Panel)
 	f.BackgroundTransparency = 0.15
 	UI.Corner(f, 14)
@@ -91,7 +76,7 @@ function Notifications.Banner(text: string, color: Color3?)
 	local l = UI.Label(f, text, UDim2.new(1, -20, 1, -12), UDim2.fromOffset(10, 6), color or UI.Colors.Gold)
 	l.TextWrapped = true
 	UI.Pop(f, 1.3)
-	Notifications.Sound("Announce", 0.5)
+	Notifications.Sound(sound or "Announce")
 	task.delay(6, function()
 		f:Destroy()
 	end)
@@ -134,7 +119,7 @@ local function showDragon(species: string, mutation: string?, isNew: boolean, ho
 	UI.Label(frame, "+" .. Format.Gold(perSecond) .. "/s", UDim2.new(1, -20, 0, 30), UDim2.fromOffset(10, 346), UI.Colors.Green)
 
 	UI.Pop(frame, 0.3)
-	Notifications.Sound(if isNew then "NewDragon" else "Hatch", 0.7)
+	Notifications.Sound(if isNew or how == "Fused" then "NewDragon" elseif how == "Stolen" then "Sneak" else "Hatch")
 
 	local camera = vp.CurrentCamera
 	local model = vp:FindFirstChildWhichIsA("Model")
@@ -172,7 +157,7 @@ end
 -- "+$1.2K" flying up from the gold counter.
 function Notifications.Collected(amount: number)
 	HUD.Bump()
-	Notifications.Sound("Collect", 0.5)
+	Notifications.Sound("Collect", 1, 0.95 + math.random() * 0.1)
 	local pos = HUD.GoldPosition()
 	local l = UI.Label(gui, "+" .. Format.Gold(amount), UDim2.fromOffset(240, 50), UDim2.fromOffset(pos.X - 120, pos.Y - 90), UI.Colors.Gold)
 	l.ZIndex = 10

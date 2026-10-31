@@ -90,7 +90,7 @@ function StealService.Fail(thief: Player, reason: string?)
 	if theft.Owner.Parent then
 		Registry.BaseService.SetStolen(theft.Owner, theft.Slot, false)
 		if reason == "Bonk" then
-			Remotes.Notify:FireClient(theft.Owner, ("You got your %s back!"):format(theft.Species), "Good")
+			Remotes.Notify:FireClient(theft.Owner, ("You got your %s back!"):format(theft.Species), "Good", "Place")
 		end
 	end
 	if thief.Parent then
@@ -146,8 +146,8 @@ local function start(thief: Player, owner: Player, i: number)
 	updateExtras(thief)
 
 	local rarity = Rarities.ByName[Dragons.ByName[slot.Species].Rarity]
-	Remotes.Notify:FireClient(thief, "Run home before they bonk you!", "Warn")
-	Remotes.Notify:FireClient(owner, ("%s is stealing your %s! Bonk them!"):format(thief.DisplayName, slot.Species), "Error")
+	Remotes.Notify:FireClient(thief, "Run home before they bonk you!", "Warn", "Sneak")
+	Remotes.Notify:FireClient(owner, ("%s is stealing your %s! Bonk them!"):format(thief.DisplayName, slot.Species), "Error", "Alarm")
 	if rarity.Order >= 4 then
 		Remotes.Announce:FireAllClients(("%s is stealing %s's %s!"):format(thief.DisplayName, owner.DisplayName, slot.Species), Color3.fromRGB(255, 90, 90))
 	end

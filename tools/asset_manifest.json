@@ -263,6 +263,90 @@
     "id": "135277966081219",
     "sha": "46f81e05895832ed013842995c202c0bf26d1c43642a9ab65bfc42fa6b92e311"
   },
+  "SfxAlarm.wav": {
+    "id": "102442602757157",
+    "sha": "3a43679eed3326c940df183b3076aa42fe9b38d0fce3659c577a5292bebe1a40"
+  },
+  "SfxAnnounce.wav": {
+    "id": "107863833410316",
+    "sha": "2372837809eb4946ef0b30ccc12829dd1e7729ea7829ac2a2cd74dd1090dad36"
+  },
+  "SfxBonk.wav": {
+    "id": "126360704358709",
+    "sha": "9ba330fdb0f93cdbc9a6dfdfe6dda4bc9d04ceb60cc670d762d0177cef90cac7"
+  },
+  "SfxBurned.wav": {
+    "id": "115066997559131",
+    "sha": "2ea531429aa049f999a862fc1362948ed8ec1b4445934837e0fa4d17c27b778f"
+  },
+  "SfxClick.wav": {
+    "id": "114811639514134",
+    "sha": "a709aa49a736265c8f0299704c99b085cc29e11e0a5c2ef02eb212003fe74b10"
+  },
+  "SfxCollect.wav": {
+    "id": "90366334500000",
+    "sha": "b13a3c3b9281a89b31e2ca22f95fa015ed6f50bb7ccdcfe9a90d89a734770b3a"
+  },
+  "SfxError.wav": {
+    "id": "103677933003620",
+    "sha": "d1b6ca387eaa26e95a0d27202566d667ffe835089770c6aca04d1150f74dc79b"
+  },
+  "SfxFire.wav": {
+    "id": "133317072672065",
+    "sha": "8a230867ae05134861f16b466bab20ae2f07b209b1e785564b198d2769c65e0a"
+  },
+  "SfxGrab.wav": {
+    "id": "70989423158824",
+    "sha": "f9de4b76c9d292a2cb8e61954c2f57a7443cdbb3528e40e562c94d7b58a9f7ec"
+  },
+  "SfxHatch.wav": {
+    "id": "81125286730513",
+    "sha": "b6753d3ccc16f76e676360352d320a26af842b05788c277155c6b2fc6b77bcad"
+  },
+  "SfxLock.wav": {
+    "id": "114872316516468",
+    "sha": "b07483a931537ff1de5b1c4ae26c7cb2e6c418a19eb56764f0d2866f5bb351b6"
+  },
+  "SfxNewDragon.wav": {
+    "id": "77163371231317",
+    "sha": "34c0ac03e1598888bf54dc8c9014b3cc23d92814cbc6f55fcf73dbf0c2068dd8"
+  },
+  "SfxPlace.wav": {
+    "id": "126664775352333",
+    "sha": "402eea64c6a7e966b41971faaebd265b69d286b31f693896f9705f06d5cac7cb"
+  },
+  "SfxRebirth.wav": {
+    "id": "71064934817737",
+    "sha": "723b2cec69cfcc87dad4dc98a5cc510d62eefe63e524d60d95d32e77c37d6d11"
+  },
+  "SfxRoar.wav": {
+    "id": "123225882238965",
+    "sha": "181d7cd05b665b4deaa20cd57e8c7981a51467499b73b712bd78ecd977c1dc0f"
+  },
+  "SfxSell.wav": {
+    "id": "139983601478310",
+    "sha": "b85dd5f687a6d58c84549a4ec961ffb9ea1a2a585411323995a1542c1d5272b4"
+  },
+  "SfxSneak.wav": {
+    "id": "96858949452967",
+    "sha": "88ea1e159f19d86609ad55855c7c29f027114a7144254b7e0ee8422aec804d03"
+  },
+  "SfxStar.wav": {
+    "id": "111365161575068",
+    "sha": "fe6e4410a0d373aca1137f8436af9577e9299c7394b55487174fa94047ab2b95"
+  },
+  "SfxSwing.wav": {
+    "id": "88186059019325",
+    "sha": "5d4175e19caa45d931fb84bb398b2d3a956819fff2fbd5b784aa876d885103ff"
+  },
+  "SfxUpgrade.wav": {
+    "id": "74565694505845",
+    "sha": "13a74f91d24d2d1d931fb064f9e6c5755c2585e044259c5efa4614db66ecbf10"
+  },
+  "SfxWarning.wav": {
+    "id": "102553765574890",
+    "sha": "2ea8512d65e78f51686b75f360883b7845dc915b2338030776a47c5aa91c5415"
+  },
   "Shelter.fbx": {
     "id": "139078752187760",
     "sha": "10f5d9f7e864d3807b5e83be28d46cf73ebe26441131dd2534d81948a6b83bdc"

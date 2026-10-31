@@ -436,7 +436,7 @@ local function onPrompt(prompt: ProximityPrompt, player: Player)
 	local price = math.floor(Income.Slot(slot) * Dragons.SellSeconds)
 	BaseService.RemoveSlot(player, i)
 	Registry.DataService.AddGold(player, price)
-	Remotes.Notify:FireClient(player, ("Sold %s for %s"):format(slot.Species, Format.Gold(price)), "Good")
+	Remotes.Notify:FireClient(player, ("Sold %s for %s"):format(slot.Species, Format.Gold(price)), "Good", "Sell")
 end
 
 local function onLoaded(player: Player, data)

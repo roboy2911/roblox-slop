@@ -237,7 +237,7 @@ local function lockLoop()
 					setLocked(plot, workspace:GetServerTimeNow() + duration)
 					locked = true
 					pushOutIntruders(plot)
-					Remotes.Notify:FireClient(owner, ("Castle locked for %d seconds!"):format(duration), "Good")
+					Remotes.Notify:FireClient(owner, ("Castle locked for %d seconds!"):format(duration), "Good", "Lock")
 				end
 				onPad[owner] = standing
 			end

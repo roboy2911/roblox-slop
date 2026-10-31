@@ -7,8 +7,8 @@ local RunService = game:GetService("RunService")
 local EVENTS = {
 	-- server -> client
 	"State", -- (snapshot) your saved data and stats
-	"Notify", -- (text, kind?) a small toast
-	"Announce", -- (text, color?) a big banner for everyone
+	"Notify", -- (text, kind?, sound?) a small toast
+	"Announce", -- (text, color?, sound?) a big banner for everyone
 	"Knockback", -- (velocity) you got bonked
 	"NewDragon", -- (species, mutation, isNew) an egg hatched / a fusion finished
 	"Collected", -- (amount) you picked up gold from your chest

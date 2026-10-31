@@ -33,15 +33,19 @@ def request(method, url, body=None, headers=None):
 
 
 def upload(path, name, description):
-    is_image = path.lower().endswith(".png")
+    lower = path.lower()
+    is_image = lower.endswith(".png")
+    is_audio = lower.endswith((".wav", ".ogg", ".mp3"))
     meta = {
-        "assetType": "Decal" if is_image else "Model",
+        "assetType": "Decal" if is_image else "Audio" if is_audio else "Model",
         "displayName": name,
         "description": description,
         "creationContext": {"creator": {"userId": str(os.environ["ROBLOX_USER_ID"])}},
     }
     if is_image:
         content_type = "image/png"
+    elif is_audio:
+        content_type = {"wav": "audio/wav", "ogg": "audio/ogg", "mp3": "audio/mpeg"}[lower.rsplit(".", 1)[1]]
     elif path.lower().endswith(".fbx"):
         content_type = "model/fbx"
     else:

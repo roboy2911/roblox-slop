@@ -3,6 +3,7 @@
 local Controllers = script.Parent:WaitForChild("Controllers")
 
 local ORDER = {
+	"SoundFx",
 	"State",
 	"HUD",
 	"Notifications",

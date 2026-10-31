@@ -236,7 +236,7 @@ local function grab(player: Player, egg: Model)
 	table.insert(list, { Info = info, Model = model })
 	updateCarry(player)
 	if rarity.Order >= 5 then
-		Remotes.Announce:FireAllClients(("%s grabbed a %s%s Egg!"):format(player.DisplayName, if info.Mutation then info.Mutation .. " " else "", rarity.Name), rarity.Color)
+		Remotes.Announce:FireAllClients(("%s grabbed a %s%s Egg!"):format(player.DisplayName, if info.Mutation then info.Mutation .. " " else "", rarity.Name), rarity.Color, if rarity.Order >= 7 then "Star" else nil)
 	end
 end
 
@@ -258,7 +258,7 @@ function EggService.DropAll(player: Player, reason: string)
 	end
 	updateCarry(player)
 	if reason == "Bonk" then
-		Remotes.Notify:FireClient(player, "BONK! You dropped your eggs!", "Error")
+		Remotes.Notify:FireClient(player, "BONK! You dropped your eggs!", "Error", "Bonk")
 	end
 end
 
@@ -316,7 +316,7 @@ local function deliver(player: Player)
 	end
 	if placed > 0 then
 		updateCarry(player)
-		Remotes.Notify:FireClient(player, ("%d egg%s placed on your perches!"):format(placed, if placed == 1 then "" else "s"), "Good")
+		Remotes.Notify:FireClient(player, ("%d egg%s placed on your perches!"):format(placed, if placed == 1 then "" else "s"), "Good", "Place")
 		local data = Registry.DataService.Get(player)
 		if data and not data.Tutorial then
 			Registry.DataService.SetExtra(player, "TutorialStep", 3)

@@ -48,7 +48,7 @@ local function burn(player: Player, humanoid: Humanoid)
 	Registry.EggService.DropAll(player, "Burned")
 	Registry.StealService.Fail(player, "Burned")
 	humanoid.Health = 0
-	Remotes.Notify:FireClient(player, "The Elder Dragon got you! Hide under the rock shelters next time.", "Error")
+	Remotes.Notify:FireClient(player, "The Elder Dragon got you! Hide under the rock shelters next time.", "Error", "Burned")
 end
 
 local function runWave(startAt: number, speed: number)
