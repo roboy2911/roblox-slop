@@ -41,6 +41,11 @@ function QuestService.Add(player: Player, stat: string, amount: number?)
 	if not data or not data.Quests then
 		return
 	end
+	-- Lifetime stats and achievements count the same events.
+	-- (Dev commands pass huge amounts to finish quests; don't count those.)
+	if not amount or amount < 500 then
+		Registry.AchievementService.Record(player, stat, amount)
+	end
 	refresh(player, data)
 	local quests = data.Quests
 	for _, id in quests.List do

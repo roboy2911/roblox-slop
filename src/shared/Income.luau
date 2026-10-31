@@ -3,6 +3,7 @@
 
 local Dragons = require(script.Parent.Config.Dragons)
 local Economy = require(script.Parent.Config.Economy)
+local Levels = require(script.Parent.Levels)
 local Rarities = require(script.Parent.Config.Rarities)
 
 local Income = {}
@@ -43,7 +44,7 @@ function Income.Slot(slot: any): number
 	if not slot or slot.HatchAt or slot.Stolen then
 		return 0
 	end
-	return Dragons.BaseIncome(slot.Species, slot.Mutation)
+	return Dragons.BaseIncome(slot.Species, slot.Mutation) * Levels.Multiplier(Levels.FromAge(slot.Age))
 end
 
 function Income.PerSecond(data: any, hasDoubleGold: boolean): number

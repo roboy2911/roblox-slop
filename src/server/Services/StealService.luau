@@ -25,6 +25,7 @@ type Theft = {
 	Slot: number,
 	Species: string,
 	Mutation: string?,
+	Age: number?,
 	Model: Model?,
 	Started: number,
 }
@@ -165,6 +166,7 @@ local function start(thief: Player, owner: Player, i: number)
 		Slot = i,
 		Species = slot.Species,
 		Mutation = slot.Mutation,
+		Age = slot.Age,
 		Started = os.clock(),
 	}
 	thefts[thief] = theft
@@ -201,7 +203,7 @@ local function complete(thief: Player, theft: Theft)
 		theft.Model:Destroy()
 	end
 	Registry.BaseService.RemoveSlot(owner, theft.Slot)
-	Registry.BaseService.AddToFreeSlot(thief, { Species = theft.Species, Mutation = theft.Mutation })
+	Registry.BaseService.AddToFreeSlot(thief, { Species = theft.Species, Mutation = theft.Mutation, Age = theft.Age })
 	updateExtras(thief)
 	Remotes.Notify:FireClient(thief, ("You stole a %s!"):format(theft.Species), "Good")
 	Remotes.Notify:FireClient(owner, ("%s stole your %s!"):format(thief.DisplayName, theft.Species), "Error")

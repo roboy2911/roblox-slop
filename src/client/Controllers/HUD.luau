@@ -93,17 +93,19 @@ local MENU = {
 	{ Name = "Rewards", Icon = "🎁 Rewards", Color = UI.Colors.Red },
 	{ Name = "Spin", Icon = "🎡 Spin", Color = Color3.fromRGB(240, 110, 180) },
 	{ Name = "Quests", Icon = "📜 Quests", Color = UI.Colors.Orange },
+	{ Name = "Achievements", Icon = "🏅 Goals", Color = Color3.fromRGB(80, 190, 200) },
 }
 
 local function buildMenu()
-	local holder = UI.Frame(gui, UDim2.fromOffset(150, #MENU * 62), UDim2.new(0, 12, 0.5, -#MENU * 31))
+	-- Below the stats and boost boxes (top-left), so they never overlap.
+	local holder = UI.Frame(gui, UDim2.fromOffset(150, #MENU * 52), UDim2.new(0, 12, 0.5, -#MENU * 26 + 40))
 	holder.BackgroundTransparency = 1
 	local list = Instance.new("UIListLayout")
-	list.Padding = UDim.new(0, 10)
+	list.Padding = UDim.new(0, 6)
 	list.SortOrder = Enum.SortOrder.LayoutOrder
 	list.Parent = holder
 	for i, item in MENU do
-		local b = UI.Button(holder, item.Icon, item.Color, UDim2.fromOffset(150, 52))
+		local b = UI.Button(holder, item.Icon, item.Color, UDim2.fromOffset(150, 46))
 		b.LayoutOrder = i
 		HUD.Buttons[item.Name] = b
 	end

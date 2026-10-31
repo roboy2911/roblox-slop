@@ -11,6 +11,8 @@ local Economy = require(ReplicatedStorage.Shared.Config.Economy)
 local Products = require(ReplicatedStorage.Shared.Config.Products)
 local Rewards = require(ReplicatedStorage.Shared.Config.Rewards)
 local Quests = require(ReplicatedStorage.Shared.Config.Quests)
+local Achievements = require(ReplicatedStorage.Shared.Config.Achievements)
+local Levels = require(ReplicatedStorage.Shared.Levels)
 local Spin = require(ReplicatedStorage.Shared.Config.Spin)
 local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
 local Zones = require(ReplicatedStorage.Shared.Config.Zones)
@@ -408,7 +410,7 @@ local function buildFusion()
 				Preview.Make(view, species.Name)
 				UI.Label(b, (if slot.Mutation then slot.Mutation .. " " else "") .. species.Name, UDim2.new(1, -8, 0, 22), UDim2.fromOffset(4, 86),
 					if slot.Mutation then Dragons.MutationByName[slot.Mutation].Color else UI.Colors.Text)
-				UI.Label(b, rarity.Name, UDim2.new(1, -8, 0, 18), UDim2.fromOffset(4, 110), rarity.Color)
+				UI.Label(b, rarity.Name .. "  Lv" .. Levels.FromAge(slot.Age), UDim2.new(1, -8, 0, 18), UDim2.fromOffset(4, 110), rarity.Color)
 				b.Activated:Connect(function()
 					local at = table.find(selected, i)
 					if at then
@@ -770,6 +772,81 @@ local function buildQuests()
 	Panels.Quests = panel
 end
 
+-- ------------------------------------------------------------ achievements
+
+local function buildAchievements()
+	local panel = UI.Panel("🏅 Achievements", Color3.fromRGB(80, 190, 200), UDim2.fromScale(0.62, 0.74))
+	local header = UI.Label(panel.Body, "", UDim2.new(1, 0, 0, 26), UDim2.new(), UI.Colors.Muted)
+	local grid = UI.Grid(panel.Body, UDim2.fromOffset(200, 112), UDim2.fromOffset(0, 32), UDim2.new(1, 0, 1, -32))
+
+	local function value(data, stat: string): number
+		if stat == "Rebirths" then
+			return data.Rebirths
+		elseif stat == "Discovered" then
+			local n = 0
+			for _ in data.Discovered do
+				n += 1
+			end
+			return n
+		elseif stat == "Perches" then
+			return data.Perches
+		elseif stat == "TotalEarned" then
+			return data.TotalEarned
+		end
+		return (data.Stats or {})[stat] or 0
+	end
+
+	local lastSignature = ""
+	local function refresh(data)
+		if not panel.IsOpen() or not data then
+			return
+		end
+		local done, parts = 0, {}
+		for _, a in Achievements do
+			local finished = (data.Achievements or {})[a.Id] == true
+			if finished then
+				done += 1
+			end
+			table.insert(parts, tostring(finished) .. math.floor(math.min(value(data, a.Stat), a.Goal) / a.Goal * 20))
+		end
+		header.Text = ("%d / %d done  •  Rewards are given automatically"):format(done, #Achievements)
+		local signature = table.concat(parts, "|")
+		if signature == lastSignature then
+			return
+		end
+		lastSignature = signature
+		for _, child in grid:GetChildren() do
+			if child:IsA("GuiObject") then
+				child:Destroy()
+			end
+		end
+		for order, a in Achievements do
+			local finished = (data.Achievements or {})[a.Id] == true
+			local v = math.min(value(data, a.Stat), a.Goal)
+			local c = UI.Frame(grid, UDim2.new(), nil, if finished then Color3.fromRGB(55, 95, 70) else UI.Colors.PanelLight)
+			c.LayoutOrder = (if finished then 1000 else 0) + order
+			UI.Corner(c, 12)
+			UI.Stroke(c, if finished then UI.Colors.Green else UI.Colors.Stroke, 2)
+			UI.Label(c, (if finished then "✅ " else "🏅 ") .. a.Name, UDim2.new(1, -12, 0, 26), UDim2.fromOffset(6, 6), if finished then UI.Colors.Green else UI.Colors.Gold)
+			local t = UI.Label(c, a.Text, UDim2.new(1, -12, 0, 34), UDim2.fromOffset(6, 34), UI.Colors.Text)
+			t.TextWrapped = true
+			local bar = UI.Frame(c, UDim2.new(1, -12, 0, 22), UDim2.fromOffset(6, 82), UI.Colors.Stroke)
+			UI.Corner(bar, 8)
+			local fill = UI.Frame(bar, UDim2.fromScale(math.clamp(v / a.Goal, 0, 1), 1), nil, if finished then UI.Colors.Green else Color3.fromRGB(80, 190, 200))
+			UI.Corner(fill, 8)
+			local barText = UI.Label(bar, if finished then "Done!" else Format.Number(v) .. " / " .. Format.Number(a.Goal), UDim2.fromScale(1, 1))
+			barText.ZIndex = 2
+		end
+	end
+	State.Changed:Connect(refresh)
+	panel.OnOpen.Event:Connect(function()
+		lastSignature = ""
+		refresh(State.Data)
+	end)
+	HUD.Buttons.Achievements.Activated:Connect(panel.Toggle)
+	Panels.Achievements = panel
+end
+
 function Panels.Start()
 	buildUpgrades()
 	buildRebirth()
@@ -779,6 +856,7 @@ function Panels.Start()
 	buildRewards()
 	buildSpin()
 	buildQuests()
+	buildAchievements()
 end
 
 return Panels

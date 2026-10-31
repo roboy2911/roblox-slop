@@ -17,6 +17,7 @@ local Rarities = require(ReplicatedStorage.Shared.Config.Rarities)
 local Format = require(ReplicatedStorage.Shared.Format)
 local Fx = require(ReplicatedStorage.Shared.Fx)
 local Income = require(ReplicatedStorage.Shared.Income)
+local Levels = require(ReplicatedStorage.Shared.Levels)
 local Remotes = require(ReplicatedStorage.Shared.Remotes)
 local ModelFactory = require(script.Parent.ModelFactory)
 local Registry = require(script.Parent.Registry)
@@ -175,9 +176,10 @@ function BaseService.RenderSlot(player: Player, i: number)
 
 	local income = Income.Slot(slot) * Income.Multiplier(data, Registry.ShopService.HasPass(player, "DoubleGold")) * (1 + Registry.SocialService.FriendBonus(player))
 	local _, title, sub = billboard(anchor, DRAGON_HEIGHT * rarity.Scale + 0.5)
-	title.Text = (if slot.Mutation then slot.Mutation .. " " else "") .. species.Name
+	local level = Levels.FromAge(slot.Age)
+	title.Text = (if slot.Mutation then slot.Mutation .. " " else "") .. species.Name .. " Lv" .. level
 	title.TextColor3 = if slot.Mutation then Dragons.MutationByName[slot.Mutation].Color else rarity.Color
-	sub.Text = Format.Gold(income) .. "/s"
+	sub.Text = Format.Gold(income) .. "/s" .. (if level >= Levels.Max then "  ⭐MAX" else "")
 
 	local sellPrice = math.floor(Income.Slot(slot) * Dragons.SellSeconds)
 	addPrompt(anchor, "SellPrompt", "Sell for " .. Format.Gold(sellPrice), species.Name, 1.2, player, i)
@@ -286,14 +288,14 @@ function BaseService.Discover(player: Player, species: string): boolean
 end
 
 -- Puts an egg or dragon on the first free perch. Returns the slot, or nil if full.
-function BaseService.AddToFreeSlot(player: Player, slot: { Species: string, Mutation: string?, HatchAt: number? }): number?
+function BaseService.AddToFreeSlot(player: Player, slot: { Species: string, Mutation: string?, HatchAt: number?, Age: number? }): number?
 	local data = Registry.DataService.Get(player)
 	if not data then
 		return nil
 	end
 	for i = 1, data.Perches do
 		if not data.Slots[key(i)] then
-			data.Slots[key(i)] = { Species = slot.Species, Mutation = slot.Mutation, HatchAt = slot.HatchAt }
+			data.Slots[key(i)] = { Species = slot.Species, Mutation = slot.Mutation, HatchAt = slot.HatchAt, Age = slot.Age }
 			if not slot.HatchAt then
 				BaseService.Discover(player, slot.Species)
 			end
@@ -395,6 +397,19 @@ local function tick()
 				elseif v.Labels[i] then
 					v.Labels[i].Text = "Hatching " .. Format.Time(slot.HatchAt - now)
 				end
+			elseif slot and not slot.Stolen then
+				-- Dragons on perches grow up.
+				local before = Levels.FromAge(slot.Age)
+				slot.Age = (slot.Age or 0) + 1
+				local after = Levels.FromAge(slot.Age)
+				if after > before then
+					BaseService.RenderSlot(player, i)
+					Remotes.Notify:FireClient(player, ("⭐ Your %s reached Lv %d! (+%d%% gold)"):format(slot.Species, after, math.floor((Levels.Multiplier(after) - 1) * 100 + 0.5)), "Good", "Upgrade")
+					Registry.QuestService.Add(player, "LevelUp")
+					if after >= Levels.Max then
+						Registry.QuestService.Add(player, "MaxLevel")
+					end
+				end
 			end
 		end
 		-- Pay out.
@@ -494,6 +509,13 @@ local function onLoaded(player: Player, data)
 	-- Offline earnings.
 	if data.LastSeen and data.LastSeen > 0 then
 		local seconds = math.clamp(now - data.LastSeen, 0, Economy.MaxOfflineHours * 3600)
+		-- Dragons grew a bit while you were away too.
+		for _, slot in data.Slots do
+			if not slot.HatchAt then
+				slot.Age = (slot.Age or 0) + math.floor(seconds * Levels.OfflineRate)
+			end
+		end
+		BaseService.RenderAll(player)
 		local earned = math.floor(BaseService.IncomePerSecond(player) * seconds * Economy.OfflineRate)
 		if earned > 0 then
 			data.Pending += earned

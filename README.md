@@ -155,6 +155,8 @@ All numbers live in `src/shared/Config/`:
 | `Rewards.luau` | daily streak rewards (7 days) and playtime gifts |
 | `Spin.luau` | prize wheel slices and how often free spins come |
 | `Quests.luau` | the daily quest pool and rewards |
+| `Achievements.luau` | lifetime achievements, rewards, and optional Roblox badge IDs |
+| `../Levels.luau` | dragon levels: time needed per level, gold bonus per level |
 | `Boss.luau` | Elder Dragon boss: how often it lands, health, stomps, rewards |
 | `../Boosts.luau` | weekend luck and friend bonus amounts |
 | `Codes.luau` | redeem codes (`DRAGONS`, `HEIST`, `LUCKY`) |

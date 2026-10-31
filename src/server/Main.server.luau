@@ -23,6 +23,7 @@ local ORDER = {
 	"SocialService",
 	"SpinService",
 	"QuestService",
+	"AchievementService",
 	"LeaderboardService",
 	"DevCommands",
 	"AdminService",
