@@ -4,17 +4,17 @@
 
 return {
 	GamePasses = {
-		DoubleGold = { Id = 0, Name = "2x Gold", Description = "All your dragons earn double gold, forever.", Icon = "💰" },
-		VipSpeed = { Id = 0, Name = "VIP Speed", Description = "+8 walk speed, forever.", Icon = "👟" },
-		ExtraCarry = { Id = 0, Name = "Big Backpack", Description = "Carry 1 more egg at a time.", Icon = "🎒" },
-		AutoCollect = { Id = 0, Name = "Auto Collect", Description = "Gold goes straight into your pocket. No chest trips.", Icon = "🧲" },
+		DoubleGold = { Id = 2060359822, Name = "2x Gold", Description = "All your dragons earn double gold, forever.", Icon = "💰" },
+		VipSpeed = { Id = 2063286602, Name = "VIP Speed", Description = "+8 walk speed, forever.", Icon = "👟" },
+		ExtraCarry = { Id = 2062602781, Name = "Big Backpack", Description = "Carry 1 more egg at a time.", Icon = "🎒" },
+		AutoCollect = { Id = 2058662521, Name = "Auto Collect", Description = "Gold goes straight into your pocket. No chest trips.", Icon = "🧲" },
 	},
 	Products = {
-		GoldSmall = { Id = 0, Name = "Gold Pouch", Description = "10 minutes of your income (at least 1K).", Icon = "🪙" },
-		GoldLarge = { Id = 0, Name = "Gold Hoard", Description = "1 hour of your income (at least 15K).", Icon = "👑" },
-		InstantHatch = { Id = 0, Name = "Instant Hatch", Description = "Hatch every egg on your perches right now.", Icon = "🐣" },
-		LuckyFusion = { Id = 0, Name = "Lucky Fusion", Description = "Your next fusion is guaranteed Golden or Shadow.", Icon = "🍀" },
-		CalmDragon = { Id = 0, Name = "Calm the Dragon", Description = "Puts the Elder Dragon to sleep for 90 seconds for the whole server.", Icon = "😴" },
+		GoldSmall = { Id = 3724789714, Name = "Gold Pouch", Description = "10 minutes of your income (at least 1K).", Icon = "🪙" },
+		GoldLarge = { Id = 3724789928, Name = "Gold Hoard", Description = "1 hour of your income (at least 15K).", Icon = "👑" },
+		InstantHatch = { Id = 3724790032, Name = "Instant Hatch", Description = "Hatch every egg on your perches right now.", Icon = "🐣" },
+		LuckyFusion = { Id = 3724790238, Name = "Lucky Fusion", Description = "Your next fusion is guaranteed Golden or Shadow.", Icon = "🍀" },
+		CalmDragon = { Id = 3724790441, Name = "Calm the Dragon", Description = "Puts the Elder Dragon to sleep for 90 seconds for the whole server.", Icon = "😴" },
 	},
 	-- How many seconds of income the gold packs give, and their minimums.
 	GoldSmallSeconds = 600,
